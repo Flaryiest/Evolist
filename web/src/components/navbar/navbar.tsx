@@ -22,7 +22,7 @@ export default function Navbar() {
       <div className={`${styles.navbar} ${menuOpen ? styles.open : ''}`}>
         <div className={styles.navbarLogo}>
           <Link to="/" className={styles.navbarLogoText}>
-            <p>Evolist       </p>
+            <p>Evolist </p>
           </Link>
         </div>
         <div

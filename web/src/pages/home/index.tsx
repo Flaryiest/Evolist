@@ -4,9 +4,7 @@ export default function Index() {
   return (
     <div className="page">
       <Navbar></Navbar>
-      <div className={styles.indexPage}>
-        
-      </div>
+      <div className={styles.indexPage}></div>
     </div>
   );
 }
