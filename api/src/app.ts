@@ -2,7 +2,8 @@ import express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import api from './routes/api.js';
+import api from './routes/api.routes.js';
+import auth from './routes/auth.routes.js';
 const app = express();
 const port = process.env.PORT || 8080;
 
@@ -16,5 +17,6 @@ app.listen(port, () => {
 });
 
 app.use('/api', api);
+app.use('/auth', auth);
 
 export default app;
