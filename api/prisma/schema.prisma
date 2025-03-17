@@ -8,9 +8,24 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  email String @unique
+  id        Int     @id @default(autoincrement())
+  email     String  @unique
   firstName String?
-  lastName String?
-  password String
+  lastName  String?
+  password  String
+  skills    Skill[]
+}
+
+model Skill {
+  id         Int    @id @default(autoincrement())
+  name       String
+  Level      Int    @default(1)
+  Experience Int    @default(0)
+  User       User?  @relation(fields: [userId], references: [id])
+  userId     Int?
+}
+
+model SkillCategories {
+  id   Int    @id @default(autoincrement())
+  name String
 }
