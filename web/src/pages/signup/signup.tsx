@@ -1,14 +1,14 @@
-import styles from "./signup.module.css"
-import Navbar from "@/components/navbar/navbar";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import styles from './signup.module.css';
+import Navbar from '@/components/navbar/navbar';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 export default function Signup() {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: ""
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,29 +21,29 @@ export default function Signup() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validate passwords match
+
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords don't match");
       return;
     }
-
+    console.log(formData);
     try {
-      const response = await fetch('/auth/signup', {
+      const response = await fetch('http://localhost:8080/auth/signup', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify({
           firstName: formData.firstName,
           lastName: formData.lastName,
           email: formData.email,
           password: formData.password
-        }),
+        })
       });
 
       if (response.ok) {
-        window.location.href = '/dashboard'; // Redirect after successful signup
+        window.location.href = '/dashboard';
       } else {
         const errorText = await response.text();
         alert(`Signup failed: ${errorText}`);
@@ -63,7 +63,8 @@ export default function Signup() {
             <h2 className={styles.signupLogo}>Evolist</h2>
             <h1 className={styles.signupHeader}>Create your account</h1>
             <p className={styles.signupText}>
-              Join Evolist today and start tracking your personal growth journey.
+              Join Evolist today and start tracking your personal growth
+              journey.
             </p>
             <form className={styles.form} onSubmit={handleSubmit}>
               <div className={styles.formRow}>
@@ -92,10 +93,10 @@ export default function Signup() {
               </div>
               <div className={styles.formGroup}>
                 <label htmlFor="email">Email</label>
-                <input 
-                  type="email" 
-                  id="email" 
-                  name="email" 
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
                   value={formData.email}
                   onChange={handleChange}
                   required
@@ -103,9 +104,9 @@ export default function Signup() {
               </div>
               <div className={styles.formGroup}>
                 <label htmlFor="password">Password</label>
-                <input 
-                  type="password" 
-                  id="password" 
+                <input
+                  type="password"
+                  id="password"
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
@@ -114,28 +115,32 @@ export default function Signup() {
               </div>
               <div className={styles.formGroup}>
                 <label htmlFor="confirmPassword">Confirm Password</label>
-                <input 
-                  type="password" 
-                  id="confirmPassword" 
+                <input
+                  type="password"
+                  id="confirmPassword"
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   required
                 />
               </div>
-              <button
-                type="submit"
-                className={styles.submitButton}
-              >
+              <button type="submit" className={styles.submitButton}>
                 Sign Up
               </button>
             </form>
             <p className={styles.loginLink}>
-              Already have an account? <Link to="/login" className={styles.redirect}>Log in</Link>
+              Already have an account?{' '}
+              <Link to="/login" className={styles.redirect}>
+                Log in
+              </Link>
             </p>
           </div>
           <div className={styles.signupRightImageContainer}>
-            <img className={styles.signupRightImage} src ="/skill.webp" alt="building blocks for skills"></img>
+            <img
+              className={styles.signupRightImage}
+              src="/skill.webp"
+              alt="building blocks for skills"
+            ></img>
           </div>
         </div>
       </div>

@@ -1,0 +1,135 @@
+.loginPage {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  height: 100%;
+  flex: 1;
+}
+
+.loginContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 520px;
+  width: 100%;
+  padding: 40px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  margin-bottom: 80px;
+}
+
+.loginTitle {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: 600;
+}
+
+.loginForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.loginForm label {
+  color: #555;
+}
+
+.loginForm input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: 'Inter';
+}
+
+.loginForm input:focus {
+  outline: 2px solid rgb(255, 78, 240);
+}
+
+.loginSubmit {
+  padding: 10px 20px;
+  border: none;
+  margin-top: 30px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: black;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.5s;
+  width: 100%;
+}
+
+.loginSubmit:hover {
+  background-color: rgb(255, 78, 240);
+}
+
+.loginInfoText,
+.signupInfoTextTwo {
+  margin-top: 10px;
+  color: #555;
+  text-align: center;
+}
+
+.signupRedirectText {
+  color: rgb(255, 78, 240);
+  text-decoration: underline;
+}
+
+.errorText {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .loginContainer {
+    padding: 20px;
+  }
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.inputLabel {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.fullWidthInput {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.fullWidthInput:focus {
+  outline: 2px solid rgb(255, 78, 240);
+}
+
+.signupInfoText {
+  margin-top: 10px;
+  color: #555;
+  text-align: center;
+}

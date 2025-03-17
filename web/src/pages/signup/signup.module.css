@@ -1,161 +1,160 @@
 .signupPage {
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    flex-direction: column;
-    overflow-x: hidden;
-    height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  flex-direction: column;
+  overflow-x: hidden;
+  height: 100%;
 }
 
 .signup {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    max-width: 1400px;
-    width: 100%;
-    margin-top: 70px;
-    overflow-x: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1400px;
+  width: 100%;
+  margin-top: 70px;
+  overflow-x: hidden;
 }
 
 .signupLeft {
-    flex: 1;
-    padding: 20px;
-    max-width: 45%;
-    height: 100%;
+  flex: 1;
+  padding: 20px;
+  max-width: 45%;
+  height: 100%;
 }
 
 .signupLogo {
-    font-size: 2em;
-    color: #ae838e;
+  font-size: 2em;
+  color: #ae838e;
 }
 
 .signupHeader {
-    font-size: 1.5em;
-    margin-bottom: 10px;
+  font-size: 1.5em;
+  margin-bottom: 10px;
 }
 
 .signupText {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .formRow {
-    display: flex;
-    gap: 15px;
-    max-width: 100dvw;
+  display: flex;
+  gap: 15px;
+  max-width: 100dvw;
 }
 
 .formGroup {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .formGroup label {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 .formGroup input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-family: "Inter";
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: 'Inter';
 }
 
-
 button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    align-self: flex-start;
-    font-family: "Inter";
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  align-self: flex-start;
+  font-family: 'Inter';
 }
 
 button:hover {
-    background-color: rgb(212, 2, 195);
+  background-color: rgb(212, 2, 195);
 }
 
 .submitButton {
-    width: 100%;
-    background-color: black;
-    color: white;
-    transition: background-color 0.3s;
-    margin-top: 12px;
-    padding: 12px 0px;
+  width: 100%;
+  background-color: black;
+  color: white;
+  transition: background-color 0.3s;
+  margin-top: 12px;
+  padding: 12px 0px;
 }
 
 .signupRight {
-    height: 100%;
+  height: 100%;
 }
 
 .signupRightImageContainer {
-    max-height: 100dvh;
-    display: flex;
-    justify-self: center;
-    align-items: center;
-    height: 100%;
+  max-height: 100dvh;
+  display: flex;
+  justify-self: center;
+  align-items: center;
+  height: 100%;
 }
 
 .signupRightImage {
-    width: 100%;
-    max-height: 80dvh;
-    height: auto;
-    flex: 1;
-    flex-shrink: 1;
-    border-radius: 16px;
-    object-fit: cover;
+  width: 100%;
+  max-height: 80dvh;
+  height: auto;
+  flex: 1;
+  flex-shrink: 1;
+  border-radius: 16px;
+  object-fit: cover;
 }
 
 input:focus {
-    outline: 2px solid rgb(255, 78, 240);
+  outline: 2px solid rgb(255, 78, 240);
 }
 textarea:focus {
-    outline: 2px solid rgb(255, 78, 240);
+  outline: 2px solid rgb(255, 78, 240);
 }
 
 .loginLink {
-    margin-top: 16px;
+  margin-top: 16px;
 }
 
 .redirect {
-    color: rgb(142, 0, 155);
-    font-weight: 600;
+  color: rgb(142, 0, 155);
+  font-weight: 600;
 }
 
 @media (max-width: 1024px) {
-    .signupRightImageContainer {
-        display: none;
-        width: 0%;
-    }
-    .signupLeft {
-        width: 90%;
-        max-width: 90%;
-    }
+  .signupRightImageContainer {
+    display: none;
+    width: 0%;
+  }
+  .signupLeft {
+    width: 90%;
+    max-width: 90%;
+  }
 }
 
 @media (max-width: 1000px) {
-    .formGroup #firstName {
-        width: 92%;
-    }
-    .formGroup #lastName {
-        width: 92%;
-    }
+  .formGroup #firstName {
+    width: 92%;
+  }
+  .formGroup #lastName {
+    width: 92%;
+  }
 }
 
 @media (max-width: 600px) {
-    .formGroup #firstName {
-        width: 86%;
-    }
-    .formGroup #lastName {
-        width: 86%;
-    }
+  .formGroup #firstName {
+    width: 86%;
+  }
+  .formGroup #lastName {
+    width: 86%;
+  }
 }
