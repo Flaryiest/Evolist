@@ -132,30 +132,30 @@ textarea:focus {
 }
 
 @media (max-width: 1024px) {
-    .signupRight {
+    .signupRightImageContainer {
         display: none;
         width: 0%;
     }
     .signupLeft {
-        width: 85%;
+        width: 90%;
         max-width: 90%;
     }
 }
 
 @media (max-width: 1000px) {
     .formGroup #firstName {
-        width: 90%;
+        width: 92%;
     }
     .formGroup #lastName {
-        width: 90%;
+        width: 92%;
     }
 }
 
 @media (max-width: 600px) {
     .formGroup #firstName {
-        width: 70%;
+        width: 86%;
     }
     .formGroup #lastName {
-        width: 70%;
+        width: 86%;
     }
 }

@@ -134,8 +134,8 @@ export default function Signup() {
               Already have an account? <Link to="/login" className={styles.redirect}>Log in</Link>
             </p>
           </div>
-          <div className={styles.signupImage}>
-            {/* You can add an image or illustration here */}
+          <div className={styles.signupRightImageContainer}>
+            <img className={styles.signupRightImage} src ="/skill.webp" alt="building blocks for skills"></img>
           </div>
         </div>
       </div>
