@@ -1,6 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M12 12C12 11.4477 12.4477 11 13 11H19C19.5523 11 20 11.4477 20 12V19C20 19.5523 19.5523 20 19 20H13C12.4477 20 12 19.5523 12 19V12Z" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
-<path d="M4 5C4 4.44772 4.44772 4 5 4H8C8.55228 4 9 4.44772 9 5V19C9 19.5523 8.55228 20 8 20H5C4.44772 20 4 19.5523 4 19V5Z" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
-<path d="M12 5C12 4.44772 12.4477 4 13 4H19C19.5523 4 20 4.44772 20 5V7C20 7.55228 19.5523 8 19 8H13C12.4477 8 12 7.55228 12 7V5Z" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="60px" height="60px" viewBox="0 0 60 60" version="1.1">
+<g id="surface1">
+<path style="fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:4;" d="M 12 12 C 12 11.448438 12.448438 11 13 11 L 19 11 C 19.551563 11 20 11.448438 20 12 L 20 19 C 20 19.551563 19.551563 20 19 20 L 13 20 C 12.448438 20 12 19.551563 12 19 Z M 12 12 " transform="matrix(2.5,0,0,2.5,0,0)"/>
+<path style="fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:4;" d="M 4 5 C 4 4.448437 4.448437 4 5 4 L 8 4 C 8.551563 4 9 4.448437 9 5 L 9 19 C 9 19.551563 8.551563 20 8 20 L 5 20 C 4.448437 20 4 19.551563 4 19 Z M 4 5 " transform="matrix(2.5,0,0,2.5,0,0)"/>
+<path style="fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:4;" d="M 12 5 C 12 4.448437 12.448438 4 13 4 L 19 4 C 19.551563 4 20 4.448437 20 5 L 20 7 C 20 7.551563 19.551563 8 19 8 L 13 8 C 12.448438 8 12 7.551563 12 7 Z M 12 5 " transform="matrix(2.5,0,0,2.5,0,0)"/>
+</g>
 </svg>
