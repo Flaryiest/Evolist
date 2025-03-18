@@ -5,6 +5,9 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   resolve: {
-    alias: [{ find: '@', replacement: '/src' }, { find: '@dashboard', replacement: '/src/pages/dashboard' }]
+    alias: [
+      { find: '@', replacement: '/src' },
+      { find: '@dashboard', replacement: '/src/pages/dashboard' }
+    ]
   }
 });

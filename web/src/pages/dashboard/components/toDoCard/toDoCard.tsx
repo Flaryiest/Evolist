@@ -1,7 +1,15 @@
-import styles from "./toDoCard.module.css";
-import type { toDoCardProps } from "@/types/dashboard/types";
+import styles from './toDoCard.module.css';
+import type { toDoCardProps } from '@/types/dashboard/types';
 
-export default function ToDoCard({ title, description, tags, status, dueDate, dueTime, id }: toDoCardProps) {
+export default function ToDoCard({
+  title,
+  description,
+  tags,
+  status,
+  dueDate,
+  dueTime,
+  id
+}: toDoCardProps) {
   return (
     <div key={id} className={styles.card}>
       <div className={styles.cardTop}></div>
@@ -17,9 +25,7 @@ export default function ToDoCard({ title, description, tags, status, dueDate, du
           );
         })}
       </div>
-      <div className={styles.cardBottom}>
-            
-      </div>
+      <div className={styles.cardBottom}></div>
     </div>
   );
 }

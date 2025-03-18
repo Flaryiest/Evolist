@@ -28,7 +28,7 @@
       "@hooks/*": ["./src/hooks/*"],
       "@pages/*": ["./src/pages/*"],
       "@types/*": ["./src/types/*"],
-      "@dashboard/*": ["./src/pages/dashboard/*"],
+      "@dashboard/*": ["./src/pages/dashboard/*"]
     }
   },
   "include": ["src"]
