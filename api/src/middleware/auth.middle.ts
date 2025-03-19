@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import * as db from '../database/queries.js';
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 
 declare global {
   namespace Express {

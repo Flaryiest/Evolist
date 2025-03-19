@@ -15,6 +15,7 @@ export default function AppProvider({ children }: AppProviderProps) {
   const verifyToken = async () => {
     try {
       setIsLoading(true);
+      
       const response = await fetch('/auth/verify', {
         method: 'GET',
         credentials: 'include',
@@ -22,10 +23,9 @@ export default function AppProvider({ children }: AppProviderProps) {
           'Content-Type': 'application/json'
         }
       });
-
       if (response.ok) {
         const userData = await response.json();
-        setUser(userData);
+        setUser(userData); // breaks here because not all data fields are present
         setError(null);
         return true;
       } else {

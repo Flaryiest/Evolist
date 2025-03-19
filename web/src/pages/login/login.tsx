@@ -2,9 +2,13 @@ import styles from './login.module.css';
 import Navbar from '@/components/navbar/navbar';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from "@/hooks/authContext";
 
 export default function Login() {
   const navigate = useNavigate();
+  const {refreshAuth } = useAuth();
+
+
   const [error, setError] = useState('');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -41,7 +45,12 @@ export default function Login() {
       if (response.status === 400) {
         setError('Login failed. Please check your details and try again.');
       } else if (response.status === 200) {
-        navigate('/dashboard');
+        const auth = await refreshAuth();
+        console.log(auth);
+        if (auth) {
+          navigate('/dashboard');
+        }
+        
       } else {
         setError('An unexpected error occurred. Please try again.');
       }
