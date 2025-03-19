@@ -29,3 +29,21 @@ model SkillCategories {
   id   Int    @id @default(autoincrement())
   name String
 }
+
+model Task {
+  id          Int     @id @default(autoincrement())
+  title       String
+  description String
+  tags        Tag[]
+  status      Boolean
+  dueDate     String?
+  dueTime     String?
+}
+
+model Tag {
+  id     Int    @id @default(autoincrement())
+  title  String
+  type   String
+  Task   Task?  @relation(fields: [taskId], references: [id])
+  taskId Int?
+}
