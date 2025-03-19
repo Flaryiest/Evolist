@@ -11,7 +11,10 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
-    "prettier:fix": "prettier --write src"
+    "prettier:fix": "prettier --write src",
+    "seed": "ts-node src/database/init.ts",
+    "db:reset": "ts-node src/database/init.ts"
+
   },
   "keywords": [],
   "author": "",
