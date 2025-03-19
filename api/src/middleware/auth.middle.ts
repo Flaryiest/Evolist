@@ -3,6 +3,14 @@ import jwt from 'jsonwebtoken';
 import * as db from '../database/queries.js';
 import { Request, Response, NextFunction } from 'express';
 
+declare global {
+  namespace Express {
+    interface Request {
+      user?: any;
+    }
+  }
+}
+
 async function signUp(req: Request, res: Response) {
   bcrypt.hash(req.body.password, 10, async function (err, hash) {
     if (err) {
@@ -38,7 +46,7 @@ async function login(req: Request, res: Response) {
       jwt.sign(
         { userInfo },
         process.env.SECRET_KEY,
-        { expiresIn: '10000s' },
+        { expiresIn: '100000s' },
         (err: any, token: any) => {
           if (err) {
             console.log(err);
@@ -64,6 +72,26 @@ async function login(req: Request, res: Response) {
   });
 }
 
-async function verifyToken(req: Request, res: Response, next: NextFunction) {}
+async function verify(req: Request, res: Response) {
+  const token = req.cookies.jwt;
+  if (!token) {
+    console.log('Not logged in');
+    return res.status(401).send('Authentication required');
+  }
 
-export { signUp, login, verifyToken };
+  jwt.verify(token, process.env.SECRET_KEY, (err: any, decoded: any) => {
+    if (err) {
+      console.log('Token verification error:', err);
+      return res.status(401).send('Invalid or expired token');
+    }
+
+    req.user = decoded.userInfo;
+  });
+}
+
+async function logOut(req: Request, res: Response) {
+  res.clearCookie('jwt');
+  res.status(200).send('Logged out');
+}
+
+export { signUp, login, verify, logOut };

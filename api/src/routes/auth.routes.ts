@@ -1,5 +1,5 @@
 import express from 'express';
-import { signUp, login } from '../middleware/auth.middle.js';
+import { signUp, login, verify, logOut } from '../middleware/auth.middle.js';
 const auth = express.Router();
 
 auth.get('/test', (req, res) => {
@@ -12,6 +12,14 @@ auth.post('/signup', (req, res) => {
 
 auth.post('/login', (req, res) => {
   login(req, res);
+});
+
+auth.get('/verify', (req, res) => {
+  verify(req, res);
+});
+
+auth.get('/logout', (req, res) => {
+  logOut(req, res);
 });
 
 export default auth;
