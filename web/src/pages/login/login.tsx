@@ -2,12 +2,11 @@ import styles from './login.module.css';
 import Navbar from '@/components/navbar/navbar';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from "@/hooks/authContext";
+import { useAuth } from '@/hooks/authContext';
 
 export default function Login() {
   const navigate = useNavigate();
-  const {refreshAuth } = useAuth();
-
+  const { refreshAuth } = useAuth();
 
   const [error, setError] = useState('');
 
@@ -46,11 +45,9 @@ export default function Login() {
         setError('Login failed. Please check your details and try again.');
       } else if (response.status === 200) {
         const auth = await refreshAuth();
-        console.log(auth);
         if (auth) {
           navigate('/dashboard');
         }
-        
       } else {
         setError('An unexpected error occurred. Please try again.');
       }

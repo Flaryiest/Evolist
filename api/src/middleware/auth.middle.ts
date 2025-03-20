@@ -86,6 +86,7 @@ async function verify(req: Request, res: Response) {
     }
 
     req.user = decoded.userInfo;
+    res.status(200).json({ user: req.user });
   });
 }
 

@@ -15,17 +15,18 @@ export default function AppProvider({ children }: AppProviderProps) {
   const verifyToken = async () => {
     try {
       setIsLoading(true);
-      
-      const response = await fetch('/auth/verify', {
-        method: 'GET',
+      console.log('pog');
+      const response = await fetch('http://localhost:8080/auth/verify', {
+        method: 'POST',
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         }
       });
+
       if (response.ok) {
         const userData = await response.json();
-        setUser(userData); // breaks here because not all data fields are present
+        setUser(userData.user);
         setError(null);
         return true;
       } else {
@@ -40,6 +41,7 @@ export default function AppProvider({ children }: AppProviderProps) {
     } catch (err) {
       setError('Network error when verifying authentication');
       setUser(null);
+      console.log(err);
       return false;
     } finally {
       setIsLoading(false);
@@ -53,7 +55,7 @@ export default function AppProvider({ children }: AppProviderProps) {
   const login = async (email: string, password: string) => {
     try {
       setIsLoading(true);
-      const response = await fetch('/auth/login', {
+      const response = await fetch('http://localhost:8080/auth/login', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -85,7 +87,7 @@ export default function AppProvider({ children }: AppProviderProps) {
   const logout = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch('/auth/logout', {
+      const response = await fetch('http://localhost:8080/auth/logout', {
         method: 'POST',
         credentials: 'include',
         headers: {

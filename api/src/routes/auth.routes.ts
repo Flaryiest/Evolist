@@ -14,7 +14,7 @@ auth.post('/login', (req, res) => {
   login(req, res);
 });
 
-auth.get('/verify', (req, res) => {
+auth.post('/verify', (req, res) => {
   verify(req, res);
 });
 
