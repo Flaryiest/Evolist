@@ -41,5 +41,6 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => Promise<void>;
   refreshAuth: () => Promise<boolean>;
+  updateTaskStatus: (taskId: number, newStatus: boolean) => void;
 }
 export type { UserData, AuthContextType };

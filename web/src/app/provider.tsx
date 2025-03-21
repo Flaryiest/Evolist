@@ -1,4 +1,4 @@
-import { ReactNode, useState, useEffect } from 'react';
+import { ReactNode, useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import type { UserData } from '@/types/general/types';
 import type { AuthContextType } from '@/types/general/types';
 import { AuthContext } from '@/hooks/authContext';
@@ -11,11 +11,15 @@ export default function AppProvider({ children }: AppProviderProps) {
   const [user, setUser] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const isRefreshing = useRef(false);
 
-  const verifyToken = async () => {
+  const verifyToken = useCallback(async () => { 
+    if (isRefreshing.current) return false;
+    
     try {
       setIsLoading(true);
-      console.log('pog');
+      isRefreshing.current = true;
+      
       const response = await fetch('http://localhost:8080/auth/verify', {
         method: 'POST',
         credentials: 'include',
@@ -45,14 +49,13 @@ export default function AppProvider({ children }: AppProviderProps) {
       return false;
     } finally {
       setIsLoading(false);
+      isRefreshing.current = false;
     }
-  };
-
+  }, []); 
   useEffect(() => {
     verifyToken();
-  }, []);
-
-  const login = async (email: string, password: string) => {
+  }, []); 
+  const login = useCallback(async (email: string, password: string) => {
     try {
       setIsLoading(true);
       const response = await fetch('http://localhost:8080/auth/login', {
@@ -82,9 +85,9 @@ export default function AppProvider({ children }: AppProviderProps) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
-  const logout = async () => {
+  const logout = useCallback(async () => {
     try {
       setIsLoading(true);
       const response = await fetch('http://localhost:8080/auth/logout', {
@@ -108,19 +111,39 @@ export default function AppProvider({ children }: AppProviderProps) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
-  const contextValue: AuthContextType = {
+  const updateTaskStatus = useCallback((taskId: number, newStatus: boolean) => {
+    if (!user) return;
+    
+    setUser(prevUser => {
+      if (!prevUser || !prevUser.tasks) return prevUser;
+      
+      const updatedTasks = prevUser.tasks.map(task => 
+        task.id === taskId ? {...task, status: newStatus} : task
+      );
+      
+      return {
+        ...prevUser,
+        tasks: updatedTasks
+      };
+    });
+  }, [user]);
+
+  const contextValue = useMemo<AuthContextType>(() => ({
     user,
     isAuthenticated: !!user,
     isLoading,
     error,
     login,
     logout,
-    refreshAuth: verifyToken
-  };
+    refreshAuth: verifyToken,
+    updateTaskStatus
+  }), [user, isLoading, error, login, logout, verifyToken, updateTaskStatus]);
 
   return (
-    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>
+      {children}
+    </AuthContext.Provider>
   );
 }

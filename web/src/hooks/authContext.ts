@@ -8,7 +8,8 @@ export const AuthContext = createContext<AuthContextType>({
   error: null,
   login: async () => false,
   logout: async () => {},
-  refreshAuth: async () => false
+  refreshAuth: async () => false,
+  updateTaskStatus: () => {}
 });
 
 export const useAuth = () => useContext(AuthContext);
