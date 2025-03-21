@@ -46,7 +46,6 @@ export default function Home() {
             <div className={styles.contentRight}>
               <div className={styles.dailyTasks}>
                 <h3 className={styles.dailyTasksHeader}>Daily Tasks</h3>
-                
               </div>
               <div className={styles.mySkills}>
                 <h3 className={styles.mySkillsHeader}>Skills</h3>

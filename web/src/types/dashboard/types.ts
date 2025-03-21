@@ -4,13 +4,24 @@ interface tag {
 }
 
 interface toDoCardProps {
+  id: number;
   title: string;
   description: string;
-  tags: tag[];
+  tags: any[];
   status: boolean;
-  dueDate: string;
-  dueTime: string;
+  dueDate?: string;
+  dueTime?: string;
+  onStatusChange?: (id: number, newStatus: boolean) => void;
+}
+
+interface Task {
   id: number;
+  title: string;
+  description: string;
+  tags: any[];
+  status: boolean;
+  dueDate?: string;
+  dueTime?: string;
 }
 
 interface progressBarProps {
@@ -19,4 +30,4 @@ interface progressBarProps {
   color: string;
 }
 
-export type { tag, toDoCardProps, progressBarProps };
+export type { tag, toDoCardProps, progressBarProps, Task };

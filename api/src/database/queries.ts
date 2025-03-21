@@ -29,4 +29,24 @@ async function getUserInfo(email: string) {
   }
 }
 
-export { signUp, getUserInfo };
+async function createTask(data: Prisma.TaskCreateInput) {
+  try {
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
+async function changeTaskStatus(taskId: number, newStatus: boolean) {
+  try {
+    return await prisma.task.update({
+      where: { id: taskId },
+      data: { status: newStatus }
+    });
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
+export { signUp, getUserInfo, createTask, changeTaskStatus };

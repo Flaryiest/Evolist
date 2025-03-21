@@ -9,6 +9,8 @@ import Signup from '@/pages/signup/signup';
 import Error from '@/pages/error/error';
 
 import DashboardHome from '@/pages/dashboard/pages/home/home';
+import Skills from '@/pages/dashboard/pages/skills/skills';
+import Tasks from '@/pages/dashboard/pages/tasks/tasks';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -19,6 +21,8 @@ const router = createBrowserRouter(
 
       <Route path="/dashboard">
         <Route path="" element={<DashboardHome />} />
+        <Route path="/dashboard/skills" element={<Skills />} />
+        <Route path="/dashboard/tasks" element={<Tasks />} />
       </Route>
     </>
   )

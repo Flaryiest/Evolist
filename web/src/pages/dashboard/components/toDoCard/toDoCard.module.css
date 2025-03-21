@@ -7,6 +7,7 @@
   box-shadow: 0px -1px 12px 2px rgba(85, 85, 85, 0.2);
   min-height: 250px;
   width: 400px;
+  position: relative;
 }
 
 .cardTop {
@@ -127,4 +128,43 @@
 .dueTimeIcon {
   width: 24px;
   height: 24px;
+}
+
+.checkmarkContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 32px;
+  height: 32px;
+  box-sizing: border-box;
+}
+
+.checkmarkButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0px 0px;
+  box-sizing: border-box;
+  border-radius: 40%;
+  background-color: white;
+  border: 2px solid #868686;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.checkmarkButton:hover {
+  background-color: #f9fafb;
+  transform: scale(1.05);
+}
+
+.checkmarkButton.completed {
+  border-color: #22c55e;
+  background-color: #f0fdf4;
+}
+
+.completedText {
+  text-decoration: line-through;
+  color: #9ca3af;
 }

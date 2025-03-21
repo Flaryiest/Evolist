@@ -4,6 +4,10 @@ import calendarIcon from './assets/calendar.svg';
 import alarmIcon from './assets/alarm.svg';
 import settingsIcon from './assets/dots.svg';
 import clockIcon from './assets/clock.svg';
+import { useState, useEffect } from 'react';
+import changeStatus from './statusQuery';
+import { useAuth } from '@/hooks/authContext';
+
 export default function ToDoCard({
   title,
   description,
@@ -11,17 +15,69 @@ export default function ToDoCard({
   status,
   dueDate,
   dueTime,
-  id
+  id,
+  onStatusChange
 }: toDoCardProps) {
+  const [isCompleted, setIsCompleted] = useState(status);
+  const userInfo = useAuth();
+
+  useEffect(() => {
+    setIsCompleted(status);
+  }, [status]);
+
   const today = new Date();
   const dueDateTime = new Date(`${dueDate} ${dueTime}`);
   const timeLeft = dueDateTime.getTime() - today.getTime();
-
   const timeLeftInDays = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+
+  const handleStatusToggle = async () => {
+    const newStatus = !isCompleted;
+    setIsCompleted(newStatus);
+
+    try {
+      const result = await changeStatus(id, newStatus);
+
+      if (onStatusChange) {
+        onStatusChange(id, newStatus);
+      }
+      if (!result) {
+        await userInfo.refreshAuth();
+      }
+    } catch (error) {
+      console.error('Failed to update task status:', error);
+      setIsCompleted(!newStatus);
+    }
+  };
 
   return (
     <div key={id} className={styles.card}>
       <div className={styles.cardTop}>
+        <div className={styles.checkmarkContainer}>
+          <button
+            className={`${styles.checkmarkButton} ${isCompleted ? styles.completed : ''}`}
+            onClick={handleStatusToggle}
+            aria-label={isCompleted ? 'Mark as incomplete' : 'Mark as complete'}
+          >
+            {isCompleted ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#22c55e"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M20 6L9 17l-5-5"></path>
+              </svg>
+            ) : (
+              <span className={styles.emptyCheck}></span>
+            )}
+          </button>
+        </div>
+
         <div className={styles.timeLeft}>
           <img
             src={clockIcon}
@@ -32,7 +88,6 @@ export default function ToDoCard({
             {timeLeftInDays} Days Left
           </span>
         </div>
-        <div className={styles.status}></div>
         <div className={styles.settings}>
           <button className={styles.settingsButton}>
             <img
@@ -43,8 +98,17 @@ export default function ToDoCard({
           </button>
         </div>
       </div>
-      <h5 className={styles.title}>{title}</h5>
-      <p className={styles.description}>{description}</p>
+      <h5
+        className={`${styles.title} ${isCompleted ? styles.completedText : ''}`}
+      >
+        {title}
+      </h5>
+      <p
+        className={`${styles.description} ${isCompleted ? styles.completedText : ''}`}
+      >
+        {description}
+      </p>
+
       <div className={styles.tags}>
         {tags &&
           tags.map((tag, index) => {

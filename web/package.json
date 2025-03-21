@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "react": "^19.0.0",
+    "react-checkmark": "^2.1.1",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.3.0",
     "vite-tsconfig-paths": "^5.1.4"
