@@ -1,0 +1,130 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 6px 40px;
+  border-radius: 12px;
+  box-shadow: 0px -1px 12px 2px rgba(85, 85, 85, 0.2);
+  min-height: 250px;
+  width: 400px;
+}
+
+.cardTop {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 12px 0px;
+}
+
+.cardBottom {
+  display: flex;
+  justify-self: space-between;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  min-height: 80px;
+  border-radius: 12px;
+  flex: 1;
+}
+
+.timeLeft {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  gap: 0.4rem;
+}
+
+.timeLeftIcon {
+  width: 20px;
+  height: 20px;
+}
+.timeLeftTitle {
+  font-size: 0.85em;
+  padding-right: 4px;
+  font-weight: 500;
+}
+
+.title {
+  color: black;
+  font-weight: 650;
+  font-size: 1.2rem;
+}
+
+.description {
+  font-size: 1rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.3rem;
+  width: 100%;
+  max-width: 100%;
+  text-wrap: wrap;
+}
+
+.tags {
+  display: flex;
+  gap: 1.3em;
+}
+
+.tag {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.9em;
+}
+
+.tagPriority {
+  background-color: rgba(255, 86, 80, 0.2);
+  color: #d10202;
+}
+
+.tagCategory {
+  background-color: rgba(112, 255, 55, 0.2);
+  color: #01661a;
+}
+
+.settingsIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.settingsButton {
+  padding: 0 0;
+}
+
+.settingsButton:hover {
+  background-color: white;
+}
+
+.dueDate {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.dueDateTitle {
+  color: black;
+  margin-top: 2px;
+}
+
+.dueTime {
+  display: flex;
+  margin-left: auto;
+  margin-right: 0;
+  gap: 0.5rem;
+}
+
+.dueTimeTitle {
+  color: black;
+  margin-top: 1px;
+}
+.dueDateIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.dueTimeIcon {
+  width: 24px;
+  height: 24px;
+}

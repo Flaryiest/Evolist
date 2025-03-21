@@ -20,7 +20,9 @@ export default function ProgressBar({
           }}
         ></div>
       </div>
-      <span className={styles.progressPercentage}>{clampedPercentage}%</span>
+      <span className={styles.progressPercentage}>
+        {clampedPercentage}% Complete
+      </span>
     </div>
   );
 }
