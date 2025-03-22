@@ -5,15 +5,13 @@ import ToDoCard from '@dashboard/components/toDoCard/toDoCard.tsx';
 import SkillCard from '@dashboard/components/skillCard/skillCard.tsx';
 import ProgressBar from '../../components/progressBar/progressBar';
 import { useAuth } from '@/hooks/authContext';
-
+import { useEffect } from 'react';
 export default function Home() {
   const userInfo = useAuth();
-  console.log('userinfo', userInfo);
-
-  if (userInfo.user) {
-    console.log('Full user object:', userInfo.user);
-    console.log(userInfo.user.tasks);
-  }
+  
+  useEffect(() => {
+    
+  }, [])
 
   if (userInfo.user != null) {
     return (

@@ -8,6 +8,35 @@ import { useState, useEffect } from 'react';
 import changeStatus from './statusQuery';
 import { useAuth } from '@/hooks/authContext';
 
+async function extractTaskSkills(taskDescription: string, userEmail: string) {
+  try {
+    const response = await fetch('http://localhost:8080/skills/extract', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        text: taskDescription,
+        email: userEmail
+      })
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`Failed to extract skills: ${response.status}`, errorText);
+      return null;
+    }
+
+    const data = await response.json();
+    console.log('Skills extracted:', data);
+    return data;
+  } catch (error) {
+    console.error('Error extracting skills:', error);
+    return null;
+  }
+}
+
 export default function ToDoCard({
   title,
   description,
@@ -33,9 +62,12 @@ export default function ToDoCard({
   const handleStatusToggle = async () => {
     const newStatus = !isCompleted;
     setIsCompleted(newStatus);
-
+    if (userInfo.user) {
+      await extractTaskSkills(title + description, userInfo.user.email);
+    }
     try {
       const result = await changeStatus(id, newStatus);
+
       if (result) {
         userInfo.updateTaskStatus(id, newStatus);
       } else {

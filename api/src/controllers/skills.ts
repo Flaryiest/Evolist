@@ -44,7 +44,7 @@ async function extractSkills(req: Request, res: Response) {
     });
 
     const skillResponse = completion.choices[0].message.parsed;
-
+    console.log(skillResponse)
     const user = await db.getUserInfo(req.body.email);
     if (user) {
       const userSkills = user.skills || [];
@@ -52,7 +52,7 @@ async function extractSkills(req: Request, res: Response) {
       console.log("User's existing skills:", skillNamesString);
 
       const synonymPrompt = `The user already knows these skills: ${skillNamesString}. 
-                              Based on the new task '${req.body.text}', identify if this builds on existing skills or represents a new skill.`;
+                              Based on the new task '${req.body.text}', identify if this builds on existing skills or represents a new skill. If it is pretty much identical to another skill, provide the name of the existing skill.`;
 
       const synonymCompletion = await client.beta.chat.completions.parse({
         model: 'gpt-4o-2024-08-06',
@@ -67,7 +67,7 @@ async function extractSkills(req: Request, res: Response) {
       });
 
       const synonymResponse = synonymCompletion.choices[0].message.parsed;
-
+      console.log(synonymResponse)
       if (!synonymResponse.synonymFound) {
         console.log('New skill');
         await db.createSkill(

@@ -84,7 +84,7 @@ async function verify(req: Request, res: Response) {
       console.log('Token verification error:', err);
       return res.status(401).send('Invalid or expired token');
     }
-
+    console.log(decoded.userInfo)
     req.user = decoded.userInfo;
     res.status(200).json({ user: req.user });
   });

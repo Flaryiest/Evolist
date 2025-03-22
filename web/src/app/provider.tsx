@@ -34,9 +34,9 @@ export default function AppProvider({ children }: AppProviderProps) {
           'Content-Type': 'application/json'
         }
       });
-
       if (response.ok) {
         const userData = await response.json();
+        console.log(userData)
         setUser(userData.user);
         setError(null);
         return true;
