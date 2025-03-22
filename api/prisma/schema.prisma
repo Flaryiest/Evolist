@@ -20,8 +20,8 @@ model User {
 model Skill {
   id         Int    @id @default(autoincrement())
   name       String
-  Level      Int    @default(1)
-  Experience Int    @default(0)
+  level      Int    @default(1)
+  experience Int    @default(0)
   User       User?  @relation(fields: [userId], references: [id])
   userId     Int?
 }

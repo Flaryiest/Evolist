@@ -59,33 +59,33 @@ async function seedDatabase() {
     const skillsData = [
       {
         name: 'JavaScript',
-        Level: 4,
-        Experience: 750,
+        level: 4,
+        experience: 20,
         userId: user1.id
       },
       {
         name: 'React',
-        Level: 3,
-        Experience: 450,
+        level: 3,
+        experience: 90,
         userId: user1.id
       },
       {
         name: 'Node.js',
-        Level: 2,
-        Experience: 250,
+        level: 3,
+        experience: 50,
         userId: user1.id
       },
 
       {
         name: 'UI Design',
-        Level: 5,
-        Experience: 920,
+        level: 5,
+        experience: 920,
         userId: user2.id
       },
       {
         name: 'Figma',
-        Level: 4,
-        Experience: 680,
+        level: 4,
+        experience: 680,
         userId: user2.id
       }
     ];

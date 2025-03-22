@@ -24,10 +24,16 @@ interface Task {
   dueTime?: string;
 }
 
+interface Skill {
+  name: string;
+  level: number;
+  experience: number;
+}
+
 interface progressBarProps {
   title: string;
   percentage: number;
   color: string;
 }
 
-export type { tag, toDoCardProps, progressBarProps, Task };
+export type { tag, toDoCardProps, progressBarProps, Task, Skill };

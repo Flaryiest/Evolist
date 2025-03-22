@@ -35,19 +35,15 @@ export default function ToDoCard({
     setIsCompleted(newStatus);
 
     try {
-      // Call the API to update the status on the server
       const result = await changeStatus(id, newStatus);
-
-      // Update the status in the auth context
       if (result) {
         userInfo.updateTaskStatus(id, newStatus);
       } else {
-        // If API call failed, refresh all data
         await userInfo.refreshAuth();
       }
     } catch (error) {
       console.error('Failed to update task status:', error);
-      setIsCompleted(!newStatus); // Revert UI on error
+      setIsCompleted(!newStatus); 
     }
   };
 

@@ -2,6 +2,7 @@ import styles from './home.module.css';
 import Sidebar from '@dashboard/components/sidebar/sidebar.tsx';
 import Header from '@dashboard/components/header/header.tsx';
 import ToDoCard from '@dashboard/components/toDoCard/toDoCard.tsx';
+import SkillCard from '@dashboard/components/skillCard/skillCard.tsx';
 import ProgressBar from '../../components/progressBar/progressBar';
 import { useAuth } from '@/hooks/authContext';
 
@@ -49,6 +50,22 @@ export default function Home() {
               </div>
               <div className={styles.mySkills}>
                 <h3 className={styles.mySkillsHeader}>Skills</h3>
+                <div className={styles.skillsGrid}>
+                  {userInfo.user.skills && userInfo.user.skills.length > 0 ? (
+                    userInfo.user.skills.map((skill) => (
+                      <SkillCard
+                        key={skill.id}
+                        name={skill.name}
+                        level={skill.level || 0}
+                        experience={skill.experience}
+                      />
+                    ))
+                  ) : (
+                    <div className={styles.emptySkills}>
+                      <p>No skills yet. Complete tasks to earn skills!</p>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

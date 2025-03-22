@@ -1,0 +1,116 @@
+.skillCard {
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  transition: all 0.2s ease;
+  border: 1px solid #e5e7eb;
+  width: 100%;
+  max-width: 80%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 240px;
+}
+
+.skillCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.skillHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.skillName {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.skillLevel {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.experienceContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.experienceBar {
+  background-color: #f3f4f6;
+  height: 0.5rem;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.5s ease;
+}
+
+.statsRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.levelText {
+  font-size: 0.875rem;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.experienceText {
+  font-size: 0.875rem;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .skillCard {
+    min-width: 100%;
+  }
+
+  .skillHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .skillName {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .skillCard {
+    padding: 0.75rem;
+  }
+
+  .skillLevel {
+    font-size: 0.625rem;
+    padding: 0.2rem 0.4rem;
+  }
+
+  .experienceText,
+  .levelText {
+    font-size: 0.75rem;
+  }
+}
