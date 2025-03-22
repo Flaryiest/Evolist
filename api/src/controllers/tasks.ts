@@ -14,12 +14,13 @@ async function createTask(req: Request, res: Response) {
 }
 
 async function changeTaskStatus(req: Request, res: Response) {
+  console.log("testing")
   const response = await db.changeTaskStatus(req.body.taskId, req.body.status);
   console.log(response);
   if (response) {
-    res.status(200).send('Successfully changed status');
+    res.status(200).json({"success": true});
   } else {
-    res.status(400).send('Failed to change status');
+    res.status(400).json('Failed to change status');
   }
 }
 
