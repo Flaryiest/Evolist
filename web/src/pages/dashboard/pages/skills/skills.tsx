@@ -4,7 +4,7 @@ import Header from '@dashboard/components/header/header.tsx';
 import SkillCard from '@dashboard/components/skillCard/skillCard.tsx';
 import { useAuth } from '@/hooks/authContext';
 import { useEffect, useState } from 'react';
-import type { Skill, Task } from '@/types/dashboard/types';
+import type { Skill} from '@/types/dashboard/types';
 
 type GeneratedTask = {
   id?: number;
