@@ -49,4 +49,15 @@ async function changeTaskStatus(taskId: number, newStatus: boolean) {
   }
 }
 
-export { signUp, getUserInfo, createTask, changeTaskStatus };
+async function createSkill(email: string, name: string, experience: number) {}
+
+async function updateSkill(email: string, name: string, experience: number) {}
+
+export {
+  signUp,
+  getUserInfo,
+  createTask,
+  changeTaskStatus,
+  createSkill,
+  updateSkill
+};
