@@ -12,6 +12,6 @@ skillsRouter.post('/extract', (req, res) => {
 
 skillsRouter.post('/get', (req, res) => {
   getSkills(req, res);
-})
+});
 
 export default skillsRouter;

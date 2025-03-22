@@ -50,9 +50,9 @@ export default function Skills() {
 
       if (response.ok) {
         const data = await response.json();
-        
+
         let skillsArray: Skill[] = [];
-        
+
         if (data && data.skills && Array.isArray(data.skills)) {
           skillsArray = data.skills;
         } else if (Array.isArray(data)) {
@@ -61,18 +61,18 @@ export default function Skills() {
           console.error('Unexpected skills data format:', data);
           skillsArray = [];
         }
-        
+
         // Sort skills by level (highest to lowest) and then by experience
         skillsArray.sort((a, b) => {
           const levelDiff = (b.level || 0) - (a.level || 0);
-          
+
           if (levelDiff === 0) {
             return (b.experience || 0) - (a.experience || 0);
           }
-          
+
           return levelDiff;
         });
-        
+
         setSkills(skillsArray);
       } else {
         const errorText = await response.text();
@@ -111,10 +111,12 @@ export default function Skills() {
 
       if (response.ok) {
         const data = await response.json();
-        
+
         if (data.success && data.tasks && Array.isArray(data.tasks)) {
           setGeneratedTasks(data.tasks);
-          setSuccessMessage('Tasks generated successfully! Review and accept them below.');
+          setSuccessMessage(
+            'Tasks generated successfully! Review and accept them below.'
+          );
         } else {
           setErrorMessage('Received invalid task data');
           console.error('Invalid task data:', data);
@@ -161,12 +163,16 @@ export default function Skills() {
 
       if (response.ok) {
         // Remove the accepted task from the generated tasks list
-        setGeneratedTasks(prev => prev.filter(t => 
-          t.title !== task.title || t.description !== task.description
-        ));
-        
-        setSuccessMessage(`Task "${task.title}" accepted and added to your tasks!`);
-        
+        setGeneratedTasks((prev) =>
+          prev.filter(
+            (t) => t.title !== task.title || t.description !== task.description
+          )
+        );
+
+        setSuccessMessage(
+          `Task "${task.title}" accepted and added to your tasks!`
+        );
+
         // Clear success message after 5 seconds
         setTimeout(() => {
           setSuccessMessage(null);
@@ -193,20 +199,20 @@ export default function Skills() {
           <div className={styles.skillsHeader}>
             <h1>Skills</h1>
             <div className={styles.skillsActions}>
-              <button 
+              <button
                 className={styles.refreshButton}
                 onClick={fetchSkills}
                 title="Refresh skills"
               >
-                <svg 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  width="16" 
-                  height="16" 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  strokeLinecap="round" 
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
                   strokeLinejoin="round"
                 >
                   <path d="M1 4v6h6"></path>
@@ -215,7 +221,7 @@ export default function Skills() {
                 </svg>
                 <span>Refresh</span>
               </button>
-              <button 
+              <button
                 className={styles.generateTasksButton}
                 onClick={generateTasks}
                 disabled={isGeneratingTasks}
@@ -227,15 +233,15 @@ export default function Skills() {
                   </>
                 ) : (
                   <>
-                    <svg 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      width="16" 
-                      height="16" 
-                      viewBox="0 0 24 24" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      strokeWidth="2" 
-                      strokeLinecap="round" 
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
                       strokeLinejoin="round"
                     >
                       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -252,7 +258,17 @@ export default function Skills() {
 
           {errorMessage && (
             <div className={styles.errorMessage}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="12" y1="8" x2="12" y2="12"></line>
                 <line x1="12" y1="16" x2="12.01" y2="16"></line>
@@ -264,7 +280,17 @@ export default function Skills() {
 
           {successMessage && (
             <div className={styles.successMessage}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>
@@ -276,19 +302,24 @@ export default function Skills() {
             <div className={styles.generatedTasksSection}>
               <h2>Suggested Tasks</h2>
               <p className={styles.generatedTasksIntro}>
-                Based on your skills, here are some suggested tasks you might want to take on:
+                Based on your skills, here are some suggested tasks you might
+                want to take on:
               </p>
               <div className={styles.generatedTasksGrid}>
                 {generatedTasks.map((task, index) => (
                   <div key={index} className={styles.generatedTaskCard}>
                     <h3 className={styles.generatedTaskTitle}>{task.title}</h3>
-                    <p className={styles.generatedTaskDescription}>{task.description}</p>
+                    <p className={styles.generatedTaskDescription}>
+                      {task.description}
+                    </p>
                     <div className={styles.generatedTaskDetails}>
-                      <span className={styles.generatedTaskDueDate}>Due: {task.dueDate}</span>
+                      <span className={styles.generatedTaskDueDate}>
+                        Due: {task.dueDate}
+                      </span>
                       <div className={styles.generatedTaskTags}>
                         {task.tags.map((tag, tagIndex) => (
-                          <span 
-                            key={tagIndex} 
+                          <span
+                            key={tagIndex}
                             className={`${styles.generatedTaskTag} ${styles[`tag${tag.type || 'default'}`]}`}
                           >
                             {tag.title}
@@ -296,7 +327,7 @@ export default function Skills() {
                         ))}
                       </div>
                     </div>
-                    <button 
+                    <button
                       className={styles.acceptTaskButton}
                       onClick={() => acceptTask(task)}
                       disabled={isAcceptingTask && acceptingTaskId === task.id}
@@ -308,15 +339,15 @@ export default function Skills() {
                         </>
                       ) : (
                         <>
-                          <svg 
-                            xmlns="http://www.w3.org/2000/svg" 
-                            width="16" 
-                            height="16" 
-                            viewBox="0 0 24 24" 
-                            fill="none" 
-                            stroke="currentColor" 
-                            strokeWidth="2" 
-                            strokeLinecap="round" 
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
                             strokeLinejoin="round"
                           >
                             <polyline points="9 11 12 14 22 4"></polyline>
@@ -333,7 +364,7 @@ export default function Skills() {
           )}
 
           <h2 className={styles.skillsSectionHeader}>My Skills</h2>
-          
+
           {isLoadingSkills ? (
             <div className={styles.loading}>
               <div className={styles.spinner}></div>
@@ -341,15 +372,25 @@ export default function Skills() {
             </div>
           ) : skills.length === 0 ? (
             <div className={styles.emptyState}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="40"
+                height="40"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <circle cx="12" cy="12" r="10"></circle>
                 <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
                 <line x1="12" y1="17" x2="12.01" y2="17"></line>
               </svg>
               <h3>No skills yet</h3>
               <p>
-                Complete tasks to gain skills and level them up. 
-                As you work through tasks, you'll automatically build your skill set.
+                Complete tasks to gain skills and level them up. As you work
+                through tasks, you'll automatically build your skill set.
               </p>
             </div>
           ) : (

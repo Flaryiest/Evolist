@@ -44,7 +44,7 @@ async function extractSkills(req: Request, res: Response) {
     });
 
     const skillResponse = completion.choices[0].message.parsed;
-    console.log(skillResponse)
+    console.log(skillResponse);
     const user = await db.getUserInfo(req.body.email);
     if (user) {
       const userSkills = user.skills || [];
@@ -67,7 +67,7 @@ async function extractSkills(req: Request, res: Response) {
       });
 
       const synonymResponse = synonymCompletion.choices[0].message.parsed;
-      console.log(synonymResponse)
+      console.log(synonymResponse);
       if (!synonymResponse.synonymFound) {
         console.log('New skill');
         await db.createSkill(
@@ -114,7 +114,9 @@ async function extractSkills(req: Request, res: Response) {
 async function getSkills(req: Request, res: Response) {
   try {
     if (!req.body.email) {
-      return res.status(400).json({ error: 'Missing required parameter: email' });
+      return res
+        .status(400)
+        .json({ error: 'Missing required parameter: email' });
     }
 
     const skills = await db.getSkills(req.body.email);

@@ -57,19 +57,24 @@ async function createTask(data: {
         User: {
           connect: { id: user.id }
         },
-        tags: data.tags && data.tags.length > 0 ? {
-          create: data.tags.map(tag => ({
-            title: tag.title,
-            type: tag.type || 'default'
-          }))
-        } : undefined
+        tags:
+          data.tags && data.tags.length > 0
+            ? {
+                create: data.tags.map((tag) => ({
+                  title: tag.title,
+                  type: tag.type || 'default'
+                }))
+              }
+            : undefined
       },
       include: {
         tags: true
       }
     });
 
-    console.log(`Task '${data.title}' created successfully for user ${data.email}`);
+    console.log(
+      `Task '${data.title}' created successfully for user ${data.email}`
+    );
     return task;
   } catch (err) {
     console.log('Error creating task:', err);
@@ -107,7 +112,11 @@ async function createSkill(email: string, name: string, experience: number) {
   }
 }
 
-async function updateSkill(email: string, name: string, experienceToAdd: number) {
+async function updateSkill(
+  email: string,
+  name: string,
+  experienceToAdd: number
+) {
   try {
     const user = await prisma.user.findUnique({
       where: { email },
@@ -127,17 +136,17 @@ async function updateSkill(email: string, name: string, experienceToAdd: number)
 
     let newExperience = skill.experience + experienceToAdd;
     let newLevel = skill.level;
-    
+
     while (newExperience >= 100) {
       newLevel += 1;
       newExperience -= 100;
     }
 
     return await prisma.skill.update({
-      where: { 
-        id: skill.id 
+      where: {
+        id: skill.id
       },
-      data: { 
+      data: {
         experience: newExperience,
         level: newLevel
       }
@@ -165,7 +174,7 @@ async function getTasks(email: string) {
       where: { User: { email } },
       include: {
         tags: true
-      },
+      }
     });
   } catch (err) {
     console.log(err);

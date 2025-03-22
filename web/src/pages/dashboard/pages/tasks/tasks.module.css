@@ -1,7 +1,7 @@
 #tasksPage {
   display: flex;
   min-height: 100vh;
-  background-color: #f9fafb;
+  background-color: #ffffff;
 }
 
 .content {
@@ -10,7 +10,7 @@
 }
 
 .contentContainer {
-  padding: 0px 0;
+  padding: 20px 0;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -88,7 +88,7 @@
 
 .tasksGrid > div {
   width: 100%;
-  margin: 0 !important; 
+  margin: 0 !important;
   box-sizing: border-box;
 }
 
@@ -98,7 +98,9 @@
   }
 }
 
-.loading, .error, .emptyState {
+.loading,
+.error,
+.emptyState {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -108,7 +110,8 @@
   text-align: center;
 }
 
-.spinner, .buttonSpinner {
+.spinner,
+.buttonSpinner {
   width: 36px;
   height: 36px;
   border: 3px solid rgba(79, 70, 229, 0.2);
@@ -176,7 +179,7 @@
   overflow-y: auto;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
   z-index: 1001;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 .modalHeader {
@@ -243,7 +246,9 @@ form {
   flex: 1;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   width: 100%;
   padding: 10px 12px;
   border: 1px solid #d1d5db;
@@ -252,7 +257,7 @@ input, textarea, select {
   color: #111827;
   background-color: white;
   box-sizing: border-box;
-  font-family: "Inter";
+  font-family: 'Inter';
 }
 
 textarea {
@@ -272,7 +277,7 @@ textarea {
 
 .tagInput select {
   width: 120px;
-  flex-shrink: 0; 
+  flex-shrink: 0;
 }
 
 .addTagButton {
@@ -285,7 +290,7 @@ textarea {
   font-weight: 500;
   cursor: pointer;
   white-space: nowrap;
-  flex-shrink: 0; 
+  flex-shrink: 0;
 }
 
 .tagsContainer {
@@ -391,7 +396,8 @@ textarea {
   background-color: #4338ca;
 }
 
-.cancelButton:disabled, .submitButton:disabled {
+.cancelButton:disabled,
+.submitButton:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }
@@ -407,13 +413,13 @@ textarea {
     flex-direction: column;
     gap: 12px;
   }
-  
+
   .tagInput {
     flex-direction: column;
     gap: 8px;
   }
-  
-  .tagInput select, 
+
+  .tagInput select,
   .tagInput input,
   .addTagButton {
     width: 100%;

@@ -1,9 +1,11 @@
 import styles from './header.module.css';
 import searchIcon from './assets/search.svg';
 import { useState } from 'react';
+import { useAuth } from '@/hooks/authContext';
 
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState('');
+  const userInfo = useAuth();
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -29,9 +31,12 @@ export default function Header() {
         </form>
       </div>
       <div className={styles.headerRight}>
-        <span className={styles.welcomeText}>Welcome back, User!</span>
+        <span className={styles.welcomeText}>
+          Hello, {userInfo?.user?.firstName || 'User'}{' '}
+          {userInfo?.user?.lastName || ''}
+        </span>
         <div className={styles.userAvatar}>
-          <span>U</span>
+          <span>{userInfo?.user?.firstName?.[0] || 'U'}</span>
         </div>
       </div>
     </header>

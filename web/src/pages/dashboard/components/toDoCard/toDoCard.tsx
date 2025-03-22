@@ -1,5 +1,5 @@
 import styles from './toDoCard.module.css';
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import type { toDoCardProps } from '@/types/dashboard/types';
 import calendarIcon from './assets/calendar.svg';
 import alarmIcon from './assets/alarm.svg';
@@ -103,11 +103,11 @@ export default function ToDoCard({
   status,
   dueDate,
   dueTime,
-  id,
+  id
 }: toDoCardProps) {
   const [isCompleted, setIsCompleted] = useState(status);
   const [showToast, setShowToast] = useState(false);
-  console.log(tags)
+  console.log(tags);
   const [toastData, setToastData] = useState<{
     skillName: string;
     experience: number;
@@ -150,7 +150,7 @@ export default function ToDoCard({
 
       if (result) {
         userInfo.updateTaskStatus(id, newStatus);
-        
+
         window.dispatchEvent(new CustomEvent('task-status-changed'));
       } else {
         await userInfo.refreshAuth();

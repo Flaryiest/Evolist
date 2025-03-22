@@ -1,7 +1,7 @@
 #skillsPage {
   display: flex;
   min-height: 100vh;
-  background-color: #f9fafb;
+  background-color: #ffffff;
 }
 
 .content {
@@ -34,7 +34,7 @@
   gap: 12px;
 }
 
-.refreshButton, 
+.refreshButton,
 .generateTasksButton {
   display: flex;
   align-items: center;
@@ -81,7 +81,7 @@
   animation: spin 1s linear infinite;
 }
 
-.errorMessage, 
+.errorMessage,
 .successMessage {
   display: flex;
   align-items: center;
@@ -103,7 +103,7 @@
   border-left: 4px solid #22c55e;
 }
 
-.errorMessage button, 
+.errorMessage button,
 .successMessage button {
   background: none;
   border: none;
@@ -112,7 +112,6 @@
   cursor: pointer;
   margin-left: auto;
 }
-
 
 .generatedTasksSection {
   background-color: #ffffff;
@@ -149,7 +148,9 @@
 }
 
 .generatedTaskCard:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .generatedTaskTitle {
@@ -190,7 +191,6 @@
   font-size: 0.85em;
   font-weight: 500;
 }
-
 
 .tagdefault {
   background-color: rgba(255, 86, 80, 0.2);
@@ -296,7 +296,6 @@
   }
 }
 
-
 @media (max-width: 768px) {
   .content {
     padding: 0 20px;
@@ -312,12 +311,12 @@
     width: 100%;
   }
 
-  .refreshButton, 
+  .refreshButton,
   .generateTasksButton {
     flex: 1;
     justify-content: center;
   }
-  
+
   .generatedTasksGrid {
     grid-template-columns: 1fr;
   }

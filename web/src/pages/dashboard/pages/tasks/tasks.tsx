@@ -30,7 +30,7 @@ export default function Tasks() {
   const [tagType, setTagType] = useState('default');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [taskFilter, setTaskFilter] = useState('all'); 
+  const [taskFilter, setTaskFilter] = useState('all');
 
   useEffect(() => {
     fetchTasks();
@@ -38,11 +38,11 @@ export default function Tasks() {
 
   const fetchTasks = async () => {
     if (!userInfo.user?.email) return;
-    
+
     try {
       setIsLoading(true);
       setError(null);
-      
+
       const response = await fetch('http://localhost:8080/tasks/get', {
         method: 'POST',
         headers: {
@@ -57,7 +57,7 @@ export default function Tasks() {
       if (response.ok) {
         const data = await response.json();
         console.log('Tasks data:', data);
-        
+
         let tasksArray: Task[] = [];
 
         if (data && data.tasks && Array.isArray(data.tasks)) {
@@ -69,31 +69,37 @@ export default function Tasks() {
           setError('Failed to load tasks: Unexpected data format');
           tasksArray = [];
         }
-        
 
         if (tasksArray.length > 0) {
           console.log('First task:', tasksArray[0]);
-        
-          const validTasks = tasksArray.filter(task => 
-            task && 
-            task.id && 
-            task.title && 
-            typeof task.status !== 'undefined'
+
+          const validTasks = tasksArray.filter(
+            (task) =>
+              task &&
+              task.id &&
+              task.title &&
+              typeof task.status !== 'undefined'
           );
-          
+
           if (validTasks.length !== tasksArray.length) {
-            console.warn(`Filtered out ${tasksArray.length - validTasks.length} invalid tasks`);
+            console.warn(
+              `Filtered out ${tasksArray.length - validTasks.length} invalid tasks`
+            );
           }
-          
+
           tasksArray = validTasks;
         }
-        
+
         tasksArray.sort((a, b) => {
-          const dateA = new Date(`${a.dueDate || '9999-12-31'} ${a.dueTime || '23:59'}`);
-          const dateB = new Date(`${b.dueDate || '9999-12-31'} ${b.dueTime || '23:59'}`);
+          const dateA = new Date(
+            `${a.dueDate || '9999-12-31'} ${a.dueTime || '23:59'}`
+          );
+          const dateB = new Date(
+            `${b.dueDate || '9999-12-31'} ${b.dueTime || '23:59'}`
+          );
           return dateA.getTime() - dateB.getTime();
         });
-        
+
         setTasks(tasksArray);
       } else {
         console.error('Failed to fetch tasks:', response.status);
@@ -107,9 +113,11 @@ export default function Tasks() {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value
     }));
@@ -117,18 +125,18 @@ export default function Tasks() {
 
   const addTag = () => {
     if (!tagInput.trim()) return;
-    
-    setFormData(prev => ({
+
+    setFormData((prev) => ({
       ...prev,
       tags: [...prev.tags, { title: tagInput.trim(), type: tagType }]
     }));
-    
+
     setTagInput('');
     setTagType('default');
   };
 
   const removeTag = (index: number) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       tags: prev.tags.filter((_, i) => i !== index)
     }));
@@ -136,20 +144,20 @@ export default function Tasks() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.title.trim()) {
       setError('Title is required');
       return;
     }
-    
+
     if (!formData.dueDate) {
       setError('Due date is required');
       return;
     }
-    
+
     setIsSubmitting(true);
     setError(null);
-    
+
     try {
       const response = await fetch('http://localhost:8080/tasks/create', {
         method: 'POST',
@@ -176,9 +184,9 @@ export default function Tasks() {
           dueTime: '',
           tags: []
         });
-        
+
         setShowForm(false);
-        
+
         fetchTasks();
       } else {
         const errorText = await response.text();
@@ -192,7 +200,7 @@ export default function Tasks() {
     }
   };
 
-  const filteredTasks = tasks.filter(task => {
+  const filteredTasks = tasks.filter((task) => {
     if (taskFilter === 'all') return true;
     if (taskFilter === 'completed') return task.status;
     if (taskFilter === 'incomplete') return !task.status;
@@ -207,35 +215,35 @@ export default function Tasks() {
         <div className={styles.contentContainer}>
           <div className={styles.tasksHeader}>
             <h1>My Tasks</h1>
-            <button 
+            <button
               className={styles.addTaskButton}
               onClick={() => setShowForm(true)}
             >
               + New Task
             </button>
           </div>
-          
+
           <div className={styles.filterContainer}>
-            <button 
+            <button
               className={`${styles.filterButton} ${taskFilter === 'all' ? styles.activeFilter : ''}`}
               onClick={() => setTaskFilter('all')}
             >
               All
             </button>
-            <button 
+            <button
               className={`${styles.filterButton} ${taskFilter === 'incomplete' ? styles.activeFilter : ''}`}
               onClick={() => setTaskFilter('incomplete')}
             >
               Incomplete
             </button>
-            <button 
+            <button
               className={`${styles.filterButton} ${taskFilter === 'completed' ? styles.activeFilter : ''}`}
               onClick={() => setTaskFilter('completed')}
             >
               Completed
             </button>
           </div>
-          
+
           {isLoading ? (
             <div className={styles.loading}>
               <div className={styles.spinner}></div>
@@ -244,16 +252,13 @@ export default function Tasks() {
           ) : error ? (
             <div className={styles.error}>
               <p>{error}</p>
-              <button 
-                className={styles.retryButton}
-                onClick={fetchTasks}
-              >
+              <button className={styles.retryButton} onClick={fetchTasks}>
                 Retry
               </button>
             </div>
           ) : filteredTasks.length > 0 ? (
             <div className={styles.tasksGrid}>
-              {filteredTasks.map(task => (
+              {filteredTasks.map((task) => (
                 <ToDoCard
                   key={task.id}
                   id={task.id}
@@ -273,14 +278,17 @@ export default function Tasks() {
           )}
         </div>
       </div>
-      
+
       {showForm && (
         <div className={styles.modal}>
-          <div className={styles.modalOverlay} onClick={() => setShowForm(false)}></div>
+          <div
+            className={styles.modalOverlay}
+            onClick={() => setShowForm(false)}
+          ></div>
           <div className={styles.modalContent}>
             <div className={styles.modalHeader}>
               <h2>Create New Task</h2>
-              <button 
+              <button
                 className={styles.closeButton}
                 onClick={() => setShowForm(false)}
               >
@@ -288,12 +296,8 @@ export default function Tasks() {
               </button>
             </div>
             <form onSubmit={handleSubmit}>
-              {error && (
-                <div className={styles.formError}>
-                  {error}
-                </div>
-              )}
-              
+              {error && <div className={styles.formError}>{error}</div>}
+
               <div className={styles.formGroup}>
                 <label htmlFor="title">Title*</label>
                 <input
@@ -306,7 +310,7 @@ export default function Tasks() {
                   required
                 />
               </div>
-              
+
               <div className={styles.formGroup}>
                 <label htmlFor="description">Description</label>
                 <textarea
@@ -318,7 +322,7 @@ export default function Tasks() {
                   rows={4}
                 />
               </div>
-              
+
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
                   <label htmlFor="dueDate">Due Date*</label>
@@ -331,7 +335,7 @@ export default function Tasks() {
                     required
                   />
                 </div>
-                
+
                 <div className={styles.formGroup}>
                   <label htmlFor="dueTime">Due Time</label>
                   <input
@@ -343,7 +347,7 @@ export default function Tasks() {
                   />
                 </div>
               </div>
-              
+
               <div className={styles.formGroup}>
                 <label>Tags</label>
                 <div className={styles.tagInput}>
@@ -353,32 +357,31 @@ export default function Tasks() {
                     onChange={(e) => setTagInput(e.target.value)}
                     placeholder="Add a tag"
                   />
-                  <select 
+                  <select
                     value={tagType}
                     onChange={(e) => setTagType(e.target.value)}
                   >
                     <option value="default">Priority</option>
                     <option value="primary">Relaxed</option>
-
                   </select>
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     onClick={addTag}
                     className={styles.addTagButton}
                   >
                     Add
                   </button>
                 </div>
-                
+
                 {formData.tags.length > 0 && (
                   <div className={styles.tagsContainer}>
                     {formData.tags.map((tag, index) => (
-                      <div 
-                        key={index} 
+                      <div
+                        key={index}
                         className={`${styles.tag} ${styles[`tag${tag.type}`]}`}
                       >
                         {tag.title}
-                        <button 
+                        <button
                           type="button"
                           onClick={() => removeTag(index)}
                           className={styles.removeTagButton}
@@ -390,18 +393,18 @@ export default function Tasks() {
                   </div>
                 )}
               </div>
-              
+
               <div className={styles.formActions}>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className={styles.cancelButton}
                   onClick={() => setShowForm(false)}
                   disabled={isSubmitting}
                 >
                   Cancel
                 </button>
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   className={styles.submitButton}
                   disabled={isSubmitting}
                 >
@@ -410,7 +413,9 @@ export default function Tasks() {
                       <div className={styles.buttonSpinner}></div>
                       Creating...
                     </>
-                  ) : 'Create Task'}
+                  ) : (
+                    'Create Task'
+                  )}
                 </button>
               </div>
             </form>

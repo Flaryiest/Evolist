@@ -120,7 +120,7 @@
   border: 1px solid #e5e7eb;
 }
 
-.refreshTasksButton, 
+.refreshTasksButton,
 .refreshButton {
   background: none;
   border: none;
@@ -136,7 +136,7 @@
   margin-right: 15%;
 }
 
-.refreshTasksButton:hover, 
+.refreshTasksButton:hover,
 .refreshButton:hover {
   color: #4f46e5;
   background-color: #f3f4f6;

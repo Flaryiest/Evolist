@@ -18,11 +18,11 @@ export default function Home() {
 
   useEffect(() => {
     const handleTaskStatusChange = () => {
-      setTaskUpdateCounter(prev => prev + 1);
+      setTaskUpdateCounter((prev) => prev + 1);
     };
 
     window.addEventListener('task-status-changed', handleTaskStatusChange);
-    
+
     return () => {
       window.removeEventListener('task-status-changed', handleTaskStatusChange);
     };
@@ -48,9 +48,9 @@ export default function Home() {
           if (response.ok) {
             const data = await response.json();
             console.log('Skills data:', data);
-            
+
             let skillsArray: Skill[] = [];
-            
+
             if (data && data.skills && Array.isArray(data.skills)) {
               skillsArray = data.skills;
             } else if (Array.isArray(data)) {
@@ -59,17 +59,17 @@ export default function Home() {
               console.error('Unexpected skills data format:', data);
               skillsArray = [];
             }
-            
+
             skillsArray.sort((a, b) => {
               const levelDiff = (b.level || 0) - (a.level || 0);
-              
+
               if (levelDiff === 0) {
                 return (b.experience || 0) - (a.experience || 0);
               }
-              
+
               return levelDiff;
             });
-            
+
             setSkills(skillsArray);
           } else {
             console.error('Failed to fetch skills:', response.status);
@@ -104,9 +104,9 @@ export default function Home() {
           if (response.ok) {
             const data = await response.json();
             console.log('Tasks data:', data);
-            
+
             let tasksArray: Task[] = [];
-            
+
             if (data && data.tasks && Array.isArray(data.tasks)) {
               tasksArray = data.tasks;
             } else if (Array.isArray(data)) {
@@ -115,16 +115,20 @@ export default function Home() {
               console.error('Unexpected tasks data format:', data);
               tasksArray = [];
             }
-            
+
             tasksArray.sort((a, b) => {
               if (Boolean(a.status) !== Boolean(b.status)) {
                 return Boolean(a.status) ? 1 : -1;
               }
-              const dateA = new Date(`${a.dueDate || '9999-12-31'} ${a.dueTime || '23:59'}`);
-              const dateB = new Date(`${b.dueDate || '9999-12-31'} ${b.dueTime || '23:59'}`);
+              const dateA = new Date(
+                `${a.dueDate || '9999-12-31'} ${a.dueTime || '23:59'}`
+              );
+              const dateB = new Date(
+                `${b.dueDate || '9999-12-31'} ${b.dueTime || '23:59'}`
+              );
               return dateA.getTime() - dateB.getTime();
             });
-            
+
             setTasks(tasksArray);
           } else {
             console.error('Failed to fetch tasks:', response.status);
@@ -154,35 +158,35 @@ export default function Home() {
           email: userInfo.user.email
         })
       })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Refreshed skills data:', data);
-        
-        let skillsArray: Skill[] = [];
-        
-        if (data && data.skills && Array.isArray(data.skills)) {
-          skillsArray = data.skills;
-        } else if (Array.isArray(data)) {
-          skillsArray = data;
-        } else {
-          console.error('Unexpected skills data format:', data);
-          skillsArray = [];
-        }
-        
-        skillsArray.sort((a, b) => {
-          const levelDiff = (b.level || 0) - (a.level || 0);
-          
-          if (levelDiff === 0) {
-            return (b.experience || 0) - (a.experience || 0);
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('Refreshed skills data:', data);
+
+          let skillsArray: Skill[] = [];
+
+          if (data && data.skills && Array.isArray(data.skills)) {
+            skillsArray = data.skills;
+          } else if (Array.isArray(data)) {
+            skillsArray = data;
+          } else {
+            console.error('Unexpected skills data format:', data);
+            skillsArray = [];
           }
-          
-          return levelDiff;
-        });
-        
-        setSkills(skillsArray);
-      })
-      .catch(error => console.error('Error refreshing skills:', error))
-      .finally(() => setIsLoadingSkills(false));
+
+          skillsArray.sort((a, b) => {
+            const levelDiff = (b.level || 0) - (a.level || 0);
+
+            if (levelDiff === 0) {
+              return (b.experience || 0) - (a.experience || 0);
+            }
+
+            return levelDiff;
+          });
+
+          setSkills(skillsArray);
+        })
+        .catch((error) => console.error('Error refreshing skills:', error))
+        .finally(() => setIsLoadingSkills(false));
     }
   };
 
@@ -200,31 +204,35 @@ export default function Home() {
           email: userInfo.user.email
         })
       })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Refreshed tasks data:', data);
-        
-        let tasksArray: Task[] = [];
-        
-        if (data && data.tasks && Array.isArray(data.tasks)) {
-          tasksArray = data.tasks;
-        } else if (Array.isArray(data)) {
-          tasksArray = data;
-        } else {
-          console.error('Unexpected tasks data format:', data);
-          tasksArray = [];
-        }
-        
-        tasksArray.sort((a, b) => {
-          const dateA = new Date(`${a.dueDate || '9999-12-31'} ${a.dueTime || '23:59'}`);
-          const dateB = new Date(`${b.dueDate || '9999-12-31'} ${b.dueTime || '23:59'}`);
-          return dateA.getTime() - dateB.getTime();
-        });
-        
-        setTasks(tasksArray);
-      })
-      .catch(error => console.error('Error refreshing tasks:', error))
-      .finally(() => setIsLoadingTasks(false));
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('Refreshed tasks data:', data);
+
+          let tasksArray: Task[] = [];
+
+          if (data && data.tasks && Array.isArray(data.tasks)) {
+            tasksArray = data.tasks;
+          } else if (Array.isArray(data)) {
+            tasksArray = data;
+          } else {
+            console.error('Unexpected tasks data format:', data);
+            tasksArray = [];
+          }
+
+          tasksArray.sort((a, b) => {
+            const dateA = new Date(
+              `${a.dueDate || '9999-12-31'} ${a.dueTime || '23:59'}`
+            );
+            const dateB = new Date(
+              `${b.dueDate || '9999-12-31'} ${b.dueTime || '23:59'}`
+            );
+            return dateA.getTime() - dateB.getTime();
+          });
+
+          setTasks(tasksArray);
+        })
+        .catch((error) => console.error('Error refreshing tasks:', error))
+        .finally(() => setIsLoadingTasks(false));
     }
   };
 
@@ -241,20 +249,20 @@ export default function Home() {
               </div>
               <h2 className={styles.contentHeader}>
                 Upcoming Work
-                <button 
+                <button
                   className={styles.refreshTasksButton}
                   onClick={refreshTasks}
                   title="Refresh tasks"
                 >
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    width="16" 
-                    height="16" 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    strokeWidth="2" 
-                    strokeLinecap="round" 
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
                     strokeLinejoin="round"
                   >
                     <path d="M1 4v6h6"></path>
@@ -295,20 +303,20 @@ export default function Home() {
               <div className={styles.mySkills}>
                 <h3 className={styles.mySkillsHeader}>
                   Skills
-                  <button 
+                  <button
                     className={styles.refreshButton}
                     onClick={refreshSkills}
                     title="Refresh skills"
                   >
-                    <svg 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      width="16" 
-                      height="16" 
-                      viewBox="0 0 24 24" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      strokeWidth="2" 
-                      strokeLinecap="round" 
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
                       strokeLinejoin="round"
                     >
                       <path d="M1 4v6h6"></path>
