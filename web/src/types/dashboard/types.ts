@@ -28,6 +28,7 @@ interface Skill {
   name: string;
   level: number;
   experience: number;
+  id: number;
 }
 
 interface progressBarProps {

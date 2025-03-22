@@ -111,4 +111,22 @@ async function extractSkills(req: Request, res: Response) {
   }
 }
 
-export { extractSkills };
+async function getSkills(req: Request, res: Response) {
+  try {
+    if (!req.body.email) {
+      return res.status(400).json({ error: 'Missing required parameter: email' });
+    }
+
+    const skills = await db.getSkills(req.body.email);
+    if (skills) {
+      res.status(200).json({ skills: skills });
+    } else {
+      throw new Error('User not found');
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ error: err.message || 'An error occurred' });
+  }
+}
+
+export { extractSkills, getSkills };

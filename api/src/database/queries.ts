@@ -108,11 +108,23 @@ async function updateSkill(email: string, name: string, experienceToAdd: number)
   }
 }
 
+async function getSkills(email: string) {
+  try {
+    return await prisma.skill.findMany({
+      where: { User: { email } }
+    });
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
 export {
   signUp,
   getUserInfo,
   createTask,
   changeTaskStatus,
   createSkill,
-  updateSkill
+  updateSkill,
+  getSkills
 };
