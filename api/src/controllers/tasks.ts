@@ -10,7 +10,13 @@ declare global {
 }
 
 async function createTask(req: Request, res: Response) {
-  const response = await db.createTask(req.body.task);
+  const response = await db.createTask(req.body);
+  if (response) {
+    res.status(200).json({"success": true});
+  }
+  else {
+    res.status(400).json('Failed to create task');
+  }
 }
 
 async function changeTaskStatus(req: Request, res: Response) {
@@ -24,4 +30,22 @@ async function changeTaskStatus(req: Request, res: Response) {
   }
 }
 
-export { createTask, changeTaskStatus };
+async function getTasks(req: Request, res: Response) {
+  try {
+    if (!req.body.email) {
+      return res.status(400).json({ error: 'Missing required parameter: email' });
+    }
+
+    const tasks = await db.getTasks(req.body.email);
+    if (tasks) {
+      res.status(200).json({ tasks: tasks });
+    } else {
+      throw new Error('User not found');
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ error: err.message || 'An error occurred' });
+  }
+}
+
+export { createTask, changeTaskStatus, getTasks };

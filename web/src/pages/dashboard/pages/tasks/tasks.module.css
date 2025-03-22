@@ -1,6 +1,421 @@
 #tasksPage {
   display: flex;
-  height: 100dvh;
+  min-height: 100vh;
+  background-color: #f9fafb;
+}
+
+.content {
+  flex: 1;
+  padding: 0 40px;
+}
+
+.contentContainer {
+  padding: 20px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tasksHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.tasksHeader h1 {
+  font-size: 26px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.addTaskButton {
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.addTaskButton:hover {
+  background-color: #4338ca;
+}
+
+.filterContainer {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.filterButton {
+  padding: 8px 16px;
+  border-radius: 6px;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  color: #4b5563;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filterButton:hover {
+  border-color: #d1d5db;
+  background-color: #f9fafb;
+}
+
+.activeFilter {
+  background-color: #4f46e5;
+  color: white;
+  border-color: #4f46e5;
+}
+
+.activeFilter:hover {
+  background-color: #4338ca;
+  border-color: #4338ca;
+}
+
+.tasksGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
   width: 100%;
-  overflow: hidden;
+}
+
+.tasksGrid > div {
+  width: 100%;
+  margin: 0 !important; 
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .tasksGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.loading, .error, .emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+  color: #6b7280;
+  text-align: center;
+}
+
+.spinner, .buttonSpinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(79, 70, 229, 0.2);
+  border-radius: 50%;
+  border-top-color: #4f46e5;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+.buttonSpinner {
+  width: 16px;
+  height: 16px;
+  margin: 0 8px 0 0;
+  border-width: 2px;
+}
+
+.error {
+  color: #ef4444;
+}
+
+.retryButton {
+  margin-top: 16px;
+  padding: 8px 16px;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.retryButton:hover {
+  background-color: #dc2626;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 0 20px;
+}
+
+.modalOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modalContent {
+  position: relative;
+  background-color: white;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+  box-sizing: border-box; 
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid #e5e7eb;
+  box-sizing: border-box;
+}
+
+.modalHeader h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px 8px;
+  margin-left: 12px;
+}
+
+.closeButton:hover {
+  color: #111827;
+}
+
+form {
+  padding: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.formError {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.formGroup {
+  margin-bottom: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.formRow {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.formRow .formGroup {
+  flex: 1;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #111827;
+  background-color: white;
+  box-sizing: border-box;
+  font-family: "Inter";
+}
+
+textarea {
+  resize: vertical;
+}
+
+.tagInput {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tagInput input {
+  flex: 1;
+}
+
+.tagInput select {
+  width: 120px;
+  flex-shrink: 0; 
+}
+
+.addTagButton {
+  padding: 10px 16px;
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0; 
+}
+
+.tagsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+.tagdefault {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+.tagprimary {
+  background-color: #e0f2fe;
+  color: #0369a1;
+}
+
+.tagsecondary {
+  background-color: #f5f3ff;
+  color: #6d28d9;
+}
+
+.tagsuccess {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.tagdanger {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.tagwarning {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+.taginfo {
+  background-color: #e0f2fe;
+  color: #0369a1;
+}
+
+.removeTagButton {
+  background: none;
+  border: none;
+  color: currentColor;
+  font-size: 16px;
+  margin-left: 6px;
+  padding: 0 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.cancelButton {
+  padding: 10px 16px;
+  background-color: white;
+  color: #4b5563;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.cancelButton:hover {
+  background-color: #f9fafb;
+}
+
+.submitButton {
+  padding: 10px 16px;
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.submitButton:hover {
+  background-color: #4338ca;
+}
+
+.cancelButton:disabled, .submitButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 500px) {
+  .formRow {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .tagInput {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .tagInput select, 
+  .tagInput input,
+  .addTagButton {
+    width: 100%;
+  }
 }

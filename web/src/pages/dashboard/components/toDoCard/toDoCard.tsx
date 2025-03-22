@@ -1,5 +1,5 @@
 import styles from './toDoCard.module.css';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect} from 'react';
 import type { toDoCardProps } from '@/types/dashboard/types';
 import calendarIcon from './assets/calendar.svg';
 import alarmIcon from './assets/alarm.svg';
@@ -104,7 +104,6 @@ export default function ToDoCard({
   dueDate,
   dueTime,
   id,
-  onStatusChange
 }: toDoCardProps) {
   const [isCompleted, setIsCompleted] = useState(status);
   const [showToast, setShowToast] = useState(false);

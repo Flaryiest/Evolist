@@ -29,10 +29,50 @@ async function getUserInfo(email: string) {
   }
 }
 
-async function createTask(data: Prisma.TaskCreateInput) {
+async function createTask(data: {
+  email: string;
+  title: string;
+  description: string;
+  dueDate: string;
+  dueTime: string;
+  tags?: { title: string; type?: string }[];
+  status: boolean;
+}) {
   try {
+    const user = await prisma.user.findUnique({
+      where: { email: data.email }
+    });
+
+    if (!user) {
+      console.log(`User with email ${data.email} not found`);
+      return false;
+    }
+    const task = await prisma.task.create({
+      data: {
+        title: data.title,
+        description: data.description,
+        dueDate: data.dueDate,
+        dueTime: data.dueTime,
+        status: data.status,
+        User: {
+          connect: { id: user.id }
+        },
+        tags: data.tags && data.tags.length > 0 ? {
+          create: data.tags.map(tag => ({
+            title: tag.title,
+            type: tag.type || 'default'
+          }))
+        } : undefined
+      },
+      include: {
+        tags: true
+      }
+    });
+
+    console.log(`Task '${data.title}' created successfully for user ${data.email}`);
+    return task;
   } catch (err) {
-    console.log(err);
+    console.log('Error creating task:', err);
     return false;
   }
 }
@@ -119,6 +159,17 @@ async function getSkills(email: string) {
   }
 }
 
+async function getTasks(email: string) {
+  try {
+    return await prisma.task.findMany({
+      where: { User: { email } }
+    });
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
 export {
   signUp,
   getUserInfo,
@@ -126,5 +177,6 @@ export {
   changeTaskStatus,
   createSkill,
   updateSkill,
-  getSkills
+  getSkills,
+  getTasks
 };
