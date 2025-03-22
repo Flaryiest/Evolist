@@ -1,6 +1,324 @@
 #skillsPage {
   display: flex;
-  height: 100dvh;
+  min-height: 100vh;
+  background-color: #f9fafb;
+}
+
+.content {
+  flex: 1;
+  padding: 0 0px;
+}
+
+.contentContainer {
+  padding: 20px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.skillsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.skillsHeader h1 {
+  font-size: 26px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.skillsActions {
+  display: flex;
+  gap: 12px;
+}
+
+.refreshButton, 
+.generateTasksButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.refreshButton {
+  background-color: #f3f4f6;
+  color: #4b5563;
+  border: 1px solid #e5e7eb;
+}
+
+.refreshButton:hover {
+  background-color: #e5e7eb;
+}
+
+.generateTasksButton {
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+}
+
+.generateTasksButton:hover {
+  background-color: #4338ca;
+}
+
+.generateTasksButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.buttonSpinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s linear infinite;
+}
+
+.errorMessage, 
+.successMessage {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 24px;
+}
+
+.errorMessage {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border-left: 4px solid #ef4444;
+}
+
+.successMessage {
+  background-color: #dcfce7;
+  color: #15803d;
+  border-left: 4px solid #22c55e;
+}
+
+.errorMessage button, 
+.successMessage button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: currentColor;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+
+.generatedTasksSection {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 32px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.generatedTasksSection h2 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 20px;
+  color: #111827;
+}
+
+.generatedTasksIntro {
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
+.generatedTasksGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.generatedTaskCard {
+  background-color: #f9fafb;
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  transition: all 0.2s;
+}
+
+.generatedTaskCard:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.generatedTaskTitle {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 18px;
+  color: #111827;
+}
+
+.generatedTaskDescription {
+  color: #4b5563;
+  margin-bottom: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.generatedTaskDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.generatedTaskDueDate {
+  font-size: 14px;
+  color: #4b5563;
+}
+
+.generatedTaskTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.generatedTaskTag {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.85em;
+  font-weight: 500;
+}
+
+
+.tagdefault {
+  background-color: rgba(255, 86, 80, 0.2);
+  color: #d10202;
+}
+
+.tagprimary {
+  background-color: rgba(37, 99, 235, 0.15);
+  color: #2563eb;
+}
+
+.acceptTaskButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   width: 100%;
-  overflow: hidden;
+  padding: 10px;
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.acceptTaskButton:hover {
+  background-color: #4338ca;
+}
+
+.acceptTaskButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.skillsSectionHeader {
+  margin-top: 36px;
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #111827;
+}
+
+.skillsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  row-gap: 60px;
+}
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+  color: #6b7280;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(79, 70, 229, 0.2);
+  border-radius: 50%;
+  border-top-color: #4f46e5;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+.emptyState {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 48px 24px;
+  text-align: center;
+  border: 1px dashed #d1d5db;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+}
+
+.emptyState svg {
+  margin-bottom: 16px;
+  color: #9ca3af;
+}
+
+.emptyState h3 {
+  font-size: 18px;
+  color: #111827;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.emptyState p {
+  max-width: 500px;
+  line-height: 1.5;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+@media (max-width: 768px) {
+  .content {
+    padding: 0 20px;
+  }
+
+  .skillsHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .skillsActions {
+    width: 100%;
+  }
+
+  .refreshButton, 
+  .generateTasksButton {
+    flex: 1;
+    justify-content: center;
+  }
+  
+  .generatedTasksGrid {
+    grid-template-columns: 1fr;
+  }
 }

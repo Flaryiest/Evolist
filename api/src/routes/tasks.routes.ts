@@ -1,5 +1,5 @@
 import express from 'express';
-import { changeTaskStatus, createTask, getTasks } from '../controllers/tasks.js';
+import { changeTaskStatus, createTask, getTasks, generateTasks } from '../controllers/tasks.js';
 const tasksRouter = express.Router();
 
 tasksRouter.get('/test', (req, res) => {
@@ -17,5 +17,9 @@ tasksRouter.post('/create', (req, res) => {
 tasksRouter.post('/get', (req, res) => {
   getTasks(req, res);
 });
+
+tasksRouter.post('/generate', (req, res) => {
+  generateTasks(req, res);
+})
 
 export default tasksRouter;

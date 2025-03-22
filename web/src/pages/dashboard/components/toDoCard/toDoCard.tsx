@@ -107,6 +107,7 @@ export default function ToDoCard({
 }: toDoCardProps) {
   const [isCompleted, setIsCompleted] = useState(status);
   const [showToast, setShowToast] = useState(false);
+  console.log(tags)
   const [toastData, setToastData] = useState<{
     skillName: string;
     experience: number;

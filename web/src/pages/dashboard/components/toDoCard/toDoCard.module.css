@@ -235,6 +235,16 @@
   color: #22c55e;
 }
 
+.tagdefault {
+  background-color: rgba(255, 86, 80, 0.2);
+  color: #d10202;
+}
+
+.tagprimary {
+  background-color: rgba(37, 99, 235, 0.15);
+  color: #2563eb;
+}
+
 .toastClose {
   background: none;
   border: none;

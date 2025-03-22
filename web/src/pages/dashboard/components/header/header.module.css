@@ -3,6 +3,8 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  min-width: 100%;
+  box-sizing: border-box;
   height: 70px;
   padding: 0 20px;
   background-color: white;
@@ -25,10 +27,11 @@
 
 .searchIcon {
   position: absolute;
-  left: 12px;
+  left: 40px;
   width: 18px;
   height: 18px;
   opacity: 0.6;
+
 }
 
 .searchInput {

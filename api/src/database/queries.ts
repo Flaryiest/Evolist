@@ -162,7 +162,10 @@ async function getSkills(email: string) {
 async function getTasks(email: string) {
   try {
     return await prisma.task.findMany({
-      where: { User: { email } }
+      where: { User: { email } },
+      include: {
+        tags: true
+      },
     });
   } catch (err) {
     console.log(err);

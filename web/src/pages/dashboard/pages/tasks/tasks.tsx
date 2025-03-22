@@ -357,13 +357,9 @@ export default function Tasks() {
                     value={tagType}
                     onChange={(e) => setTagType(e.target.value)}
                   >
-                    <option value="default">Default</option>
-                    <option value="primary">Primary</option>
-                    <option value="secondary">Secondary</option>
-                    <option value="success">Success</option>
-                    <option value="danger">Danger</option>
-                    <option value="warning">Warning</option>
-                    <option value="info">Info</option>
+                    <option value="default">Priority</option>
+                    <option value="primary">Relaxed</option>
+
                   </select>
                   <button 
                     type="button" 
