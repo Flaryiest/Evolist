@@ -19,28 +19,59 @@ export default function AppProvider({ children }: AppProviderProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const isRefreshing = useRef(false);
+  const lastRefreshTime = useRef(0);
 
-  const verifyToken = useCallback(async () => {
-    if (isRefreshing.current) return false;
+  const verifyToken = useCallback(async (forceRefresh = false) => {
+    if (isRefreshing.current) {
+      console.log('Auth refresh already in progress, skipping');
+      return false;
+    }
 
+    const now = Date.now();
+    if (!forceRefresh && now - lastRefreshTime.current < 2000) {
+      console.log('Auth refresh rate limited, skipping');
+      return true;
+    }
+    
     try {
+      console.log('Starting auth verification...');
       setIsLoading(true);
       isRefreshing.current = true;
+      lastRefreshTime.current = now;
+
+      const cacheOptions = {
+        cache: 'no-store',
+        headers: {
+          'Pragma': 'no-cache',
+          'Cache-Control': 'no-cache, no-store, must-revalidate'
+        }
+      };
 
       const response = await fetch('http://localhost:8080/auth/verify', {
         method: 'POST',
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          ...cacheOptions.headers
         }
       });
+
       if (response.ok) {
         const userData = await response.json();
-        console.log(userData)
-        setUser(userData.user);
+        console.log('Auth verification successful, new user data:', userData);
+        
+        const hasChanged = JSON.stringify(userData.user) !== JSON.stringify(user);
+        if (hasChanged) {
+          console.log('User data has changed, updating state');
+          setUser(userData.user);
+        } else {
+          console.log('User data unchanged');
+        }
+        
         setError(null);
         return true;
       } else {
+        console.error(`Auth verification failed: ${response.status} ${response.statusText}`);
         setUser(null);
         if (response.status === 401) {
           console.log('Session expired or invalid');
@@ -50,21 +81,26 @@ export default function AppProvider({ children }: AppProviderProps) {
         return false;
       }
     } catch (err) {
+      console.error('Network error when verifying authentication:', err);
       setError('Network error when verifying authentication');
       setUser(null);
-      console.log(err);
       return false;
     } finally {
       setIsLoading(false);
       isRefreshing.current = false;
     }
-  }, []);
+  }, []); 
+
   useEffect(() => {
-    verifyToken();
-  }, []);
+    console.log('Initial auth check...');
+    verifyToken(true);
+  }, [verifyToken]);
+
   const login = useCallback(async (email: string, password: string) => {
     try {
       setIsLoading(true);
+      console.log('Attempting login...');
+      
       const response = await fetch('http://localhost:8080/auth/login', {
         method: 'POST',
         credentials: 'include',
@@ -76,16 +112,19 @@ export default function AppProvider({ children }: AppProviderProps) {
 
       if (response.ok) {
         const userData = await response.json();
+        console.log('Login successful, user data:', userData);
         setUser(userData);
         setError(null);
         return true;
       } else {
         const errorText = await response.text();
+        console.error('Login failed:', errorText);
         setError(errorText || 'Login failed');
         setUser(null);
         return false;
       }
     } catch (err) {
+      console.error('Network error during login:', err);
       setError('Network error during login');
       setUser(null);
       return false;
@@ -97,6 +136,8 @@ export default function AppProvider({ children }: AppProviderProps) {
   const logout = useCallback(async () => {
     try {
       setIsLoading(true);
+      console.log('Attempting logout...');
+      
       const response = await fetch('http://localhost:8080/auth/logout', {
         method: 'POST',
         credentials: 'include',
@@ -106,11 +147,12 @@ export default function AppProvider({ children }: AppProviderProps) {
       });
 
       if (response.ok) {
+        console.log('Logout successful');
         setUser(null);
       } else {
         console.error('Logout failed on server, clearing locally');
+        setUser(null);
       }
-      setUser(null);
       setError(null);
     } catch (err) {
       console.error('Error during logout:', err);
@@ -123,6 +165,8 @@ export default function AppProvider({ children }: AppProviderProps) {
   const updateTaskStatus = useCallback(
     (taskId: number, newStatus: boolean) => {
       if (!user) return;
+      
+      console.log(`Updating task ${taskId} status to ${newStatus} in context`);
 
       setUser((prevUser) => {
         if (!prevUser || !prevUser.tasks) return prevUser;
@@ -131,6 +175,8 @@ export default function AppProvider({ children }: AppProviderProps) {
           task.id === taskId ? { ...task, status: newStatus } : task
         );
 
+        console.log('Tasks after update:', updatedTasks);
+        
         return {
           ...prevUser,
           tasks: updatedTasks
@@ -148,7 +194,7 @@ export default function AppProvider({ children }: AppProviderProps) {
       error,
       login,
       logout,
-      refreshAuth: verifyToken,
+      refreshAuth: () => verifyToken(true),
       updateTaskStatus
     }),
     [user, isLoading, error, login, logout, verifyToken, updateTaskStatus]

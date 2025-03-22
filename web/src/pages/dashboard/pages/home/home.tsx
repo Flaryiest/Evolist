@@ -10,7 +10,7 @@ export default function Home() {
   const userInfo = useAuth();
   
   useEffect(() => {
-    
+
   }, [])
 
   if (userInfo.user != null) {
