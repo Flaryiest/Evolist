@@ -13,6 +13,19 @@ export default function Home() {
   const userInfo = useAuth();
   const [skills, setSkills] = useState<Skill[]>([]);
   const [isLoadingSkills, setIsLoadingSkills] = useState(true);
+  const [taskUpdateCounter, setTaskUpdateCounter] = useState(0);
+
+  useEffect(() => {
+    const handleTaskStatusChange = () => {
+      setTaskUpdateCounter(prev => prev + 1);
+    };
+
+    window.addEventListener('task-status-changed', handleTaskStatusChange);
+    
+    return () => {
+      window.removeEventListener('task-status-changed', handleTaskStatusChange);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchSkills = async () => {
@@ -34,15 +47,28 @@ export default function Home() {
             const data = await response.json();
             console.log('Skills data:', data);
             
-            // Extract the skills array from the response
+            let skillsArray: Skill[] = [];
+            
             if (data && data.skills && Array.isArray(data.skills)) {
-              setSkills(data.skills);
+              skillsArray = data.skills;
             } else if (Array.isArray(data)) {
-              setSkills(data);
+              skillsArray = data;
             } else {
               console.error('Unexpected skills data format:', data);
-              setSkills([]);
+              skillsArray = [];
             }
+            
+            skillsArray.sort((a, b) => {
+              const levelDiff = (b.level || 0) - (a.level || 0);
+              
+              if (levelDiff === 0) {
+                return (b.experience || 0) - (a.experience || 0);
+              }
+              
+              return levelDiff;
+            });
+            
+            setSkills(skillsArray);
           } else {
             console.error('Failed to fetch skills:', response.status);
           }
@@ -55,11 +81,8 @@ export default function Home() {
     };
 
     fetchSkills();
-  }, [userInfo.user?.email]);
+  }, [userInfo.user?.email, taskUpdateCounter]);
 
-  // Rest of your component stays the same
-
-  // In the return statement, modify the skills refresh function:
   const refreshSkills = () => {
     console.log('Manually refreshing skills...');
     if (userInfo.user?.email) {
@@ -78,15 +101,28 @@ export default function Home() {
       .then(data => {
         console.log('Refreshed skills data:', data);
         
-        // Extract the skills array from the response
+        let skillsArray: Skill[] = [];
+        
         if (data && data.skills && Array.isArray(data.skills)) {
-          setSkills(data.skills);
+          skillsArray = data.skills;
         } else if (Array.isArray(data)) {
-          setSkills(data);
+          skillsArray = data;
         } else {
           console.error('Unexpected skills data format:', data);
-          setSkills([]);
+          skillsArray = [];
         }
+        
+        skillsArray.sort((a, b) => {
+          const levelDiff = (b.level || 0) - (a.level || 0);
+          
+          if (levelDiff === 0) {
+            return (b.experience || 0) - (a.experience || 0);
+          }
+          
+          return levelDiff;
+        });
+        
+        setSkills(skillsArray);
       })
       .catch(error => console.error('Error refreshing skills:', error))
       .finally(() => setIsLoadingSkills(false));

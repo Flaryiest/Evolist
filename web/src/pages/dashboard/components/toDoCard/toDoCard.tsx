@@ -150,6 +150,8 @@ export default function ToDoCard({
 
       if (result) {
         userInfo.updateTaskStatus(id, newStatus);
+        
+        window.dispatchEvent(new CustomEvent('task-status-changed'));
       } else {
         await userInfo.refreshAuth();
       }
