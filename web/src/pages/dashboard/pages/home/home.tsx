@@ -8,10 +8,8 @@ import { useAuth } from '@/hooks/authContext';
 import { useEffect } from 'react';
 export default function Home() {
   const userInfo = useAuth();
-  
-  useEffect(() => {
 
-  }, [])
+  useEffect(() => {}, []);
 
   if (userInfo.user != null) {
     return (

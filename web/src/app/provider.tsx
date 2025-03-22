@@ -32,7 +32,7 @@ export default function AppProvider({ children }: AppProviderProps) {
       console.log('Auth refresh rate limited, skipping');
       return true;
     }
-    
+
     try {
       console.log('Starting auth verification...');
       setIsLoading(true);
@@ -42,7 +42,7 @@ export default function AppProvider({ children }: AppProviderProps) {
       const cacheOptions = {
         cache: 'no-store',
         headers: {
-          'Pragma': 'no-cache',
+          Pragma: 'no-cache',
           'Cache-Control': 'no-cache, no-store, must-revalidate'
         }
       };
@@ -59,19 +59,22 @@ export default function AppProvider({ children }: AppProviderProps) {
       if (response.ok) {
         const userData = await response.json();
         console.log('Auth verification successful, new user data:', userData);
-        
-        const hasChanged = JSON.stringify(userData.user) !== JSON.stringify(user);
+
+        const hasChanged =
+          JSON.stringify(userData.user) !== JSON.stringify(user);
         if (hasChanged) {
           console.log('User data has changed, updating state');
           setUser(userData.user);
         } else {
           console.log('User data unchanged');
         }
-        
+
         setError(null);
         return true;
       } else {
-        console.error(`Auth verification failed: ${response.status} ${response.statusText}`);
+        console.error(
+          `Auth verification failed: ${response.status} ${response.statusText}`
+        );
         setUser(null);
         if (response.status === 401) {
           console.log('Session expired or invalid');
@@ -89,7 +92,7 @@ export default function AppProvider({ children }: AppProviderProps) {
       setIsLoading(false);
       isRefreshing.current = false;
     }
-  }, []); 
+  }, []);
 
   useEffect(() => {
     console.log('Initial auth check...');
@@ -100,7 +103,7 @@ export default function AppProvider({ children }: AppProviderProps) {
     try {
       setIsLoading(true);
       console.log('Attempting login...');
-      
+
       const response = await fetch('http://localhost:8080/auth/login', {
         method: 'POST',
         credentials: 'include',
@@ -137,7 +140,7 @@ export default function AppProvider({ children }: AppProviderProps) {
     try {
       setIsLoading(true);
       console.log('Attempting logout...');
-      
+
       const response = await fetch('http://localhost:8080/auth/logout', {
         method: 'POST',
         credentials: 'include',
@@ -165,7 +168,7 @@ export default function AppProvider({ children }: AppProviderProps) {
   const updateTaskStatus = useCallback(
     (taskId: number, newStatus: boolean) => {
       if (!user) return;
-      
+
       console.log(`Updating task ${taskId} status to ${newStatus} in context`);
 
       setUser((prevUser) => {
@@ -176,7 +179,7 @@ export default function AppProvider({ children }: AppProviderProps) {
         );
 
         console.log('Tasks after update:', updatedTasks);
-        
+
         return {
           ...prevUser,
           tasks: updatedTasks
