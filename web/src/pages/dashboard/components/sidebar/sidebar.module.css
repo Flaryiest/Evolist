@@ -19,7 +19,7 @@
   margin-bottom: 12px;
   width: 100%;
   box-sizing: border-box;
-  margin-left: 22%;
+  margin-left: 17%;
 }
 
 .icon {
@@ -66,4 +66,8 @@
   font-size: 0.9rem;
   font-weight: 360;
   margin-left: 0.5rem;
+}
+
+.logo {
+  width: 140px;
 }

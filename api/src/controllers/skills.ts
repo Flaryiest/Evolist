@@ -30,7 +30,7 @@ async function extractSkills(req: Request, res: Response) {
         {
           role: 'system',
           content:
-            'Based on the following user input, identify a broad skill name and estimate experience points (XP) for that skill. The XP should scale with time spent and difficulty, with difficulty having a slightly lower impact. Roughly adhere to the formula XP=(Hours×10)+(Hours×Difficulty Factor) '
+            'Based on the following user input, identify a broad skill name and estimate experience points (XP) for that skill. The XP should scale with time spent and difficulty, with difficulty having a slightly lower impact. Roughly adhere to the formula XP=(Hours×5)+(Hours×Difficulty Factor) '
         },
         {
           role: 'user',

@@ -1,7 +1,6 @@
 import styles from './navbar.module.css';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -22,7 +21,7 @@ export default function Navbar() {
       <div className={`${styles.navbar} ${menuOpen ? styles.open : ''}`}>
         <div className={styles.navbarLogo}>
           <Link to="/" className={styles.navbarLogoText}>
-            <p>Evolist </p>
+            <img className={styles.logo} src="/evolition logo.webp" alt="Evolition" />
           </Link>
         </div>
         <div

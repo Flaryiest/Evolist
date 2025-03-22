@@ -1,8 +1,12 @@
 import styles from './signup.module.css';
 import Navbar from '@/components/navbar/navbar';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/authContext';
+
 export default function Signup() {
+  const navigate = useNavigate();
+  const auth = useAuth();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -10,6 +14,8 @@ export default function Signup() {
     password: '',
     confirmPassword: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [signupError, setSignupError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -21,13 +27,16 @@ export default function Signup() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSignupError(null);
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords don't match");
+      setSignupError("Passwords don't match");
       return;
     }
-    console.log(formData);
+
     try {
+      setIsSubmitting(true);
+      
       const response = await fetch('http://localhost:8080/auth/signup', {
         method: 'POST',
         headers: {
@@ -43,14 +52,27 @@ export default function Signup() {
       });
 
       if (response.ok) {
-        window.location.href = '/dashboard';
+        console.log('Account created successfully');
+        
+        const loginSuccess = await auth.login(formData.email, formData.password);
+        
+        if (loginSuccess) {
+          console.log('Auto-login successful after signup');
+          await auth.refreshAuth();
+          navigate('/dashboard');
+        } else {
+          navigate('/login')
+          setSignupError('Account created but login failed. Please try logging in manually.');
+        }
       } else {
         const errorText = await response.text();
-        alert(`Signup failed: ${errorText}`);
+        setSignupError(`Signup failed: ${errorText}`);
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('An error occurred during signup');
+      setSignupError('An error occurred during signup');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -60,34 +82,43 @@ export default function Signup() {
       <div className={styles.signupPage}>
         <div className={styles.signup}>
           <div className={styles.signupLeft}>
-            <h2 className={styles.signupLogo}>Evolist</h2>
+            <h2 className={styles.signupLogo}>Evolition</h2>
             <h1 className={styles.signupHeader}>Create your account</h1>
             <p className={styles.signupText}>
-              Join Evolist today and start tracking your personal growth
+              Join Evolition today and start tracking your personal growth
               journey.
             </p>
+            
+            {signupError && (
+              <div className={styles.errorMessage}>
+                {signupError}
+              </div>
+            )}
+            
             <form className={styles.form} onSubmit={handleSubmit}>
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
                   <label htmlFor="firstName">First Name</label>
                   <input
                     type="text"
-                    id={styles.firstName}
+                    id="firstName"
                     name="firstName"
                     value={formData.firstName}
                     onChange={handleChange}
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
                 <div className={styles.formGroup}>
                   <label htmlFor="lastName">Last Name</label>
                   <input
                     type="text"
-                    id={styles.lastName}
+                    id="lastName"
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleChange}
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
               </div>
@@ -100,6 +131,7 @@ export default function Signup() {
                   value={formData.email}
                   onChange={handleChange}
                   required
+                  disabled={isSubmitting}
                 />
               </div>
               <div className={styles.formGroup}>
@@ -111,6 +143,7 @@ export default function Signup() {
                   value={formData.password}
                   onChange={handleChange}
                   required
+                  disabled={isSubmitting}
                 />
               </div>
               <div className={styles.formGroup}>
@@ -122,10 +155,15 @@ export default function Signup() {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   required
+                  disabled={isSubmitting}
                 />
               </div>
-              <button type="submit" className={styles.submitButton}>
-                Sign Up
+              <button 
+                type="submit" 
+                className={styles.submitButton}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Creating Account...' : 'Sign Up'}
               </button>
             </form>
             <p className={styles.loginLink}>

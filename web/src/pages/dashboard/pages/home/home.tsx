@@ -245,7 +245,7 @@ export default function Home() {
           <div className={styles.contentContainer}>
             <div className={styles.contentLeft}>
               <div className={styles.progressContainer}>
-                <ProgressBar title="Today" percentage={10} color="#4f46e5" />
+                <ProgressBar title="Today" percentage={100} color="#4f46e5" />
               </div>
               <h2 className={styles.contentHeader}>
                 Upcoming Work
