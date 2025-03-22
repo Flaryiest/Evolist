@@ -114,7 +114,7 @@ async function seedDatabase() {
       {
         title: 'Learn GraphQL',
         description: 'Complete the online GraphQL course',
-        status: true,
+        status: false,
         dueDate: '2025-03-20',
         dueTime: '12:00',
         userId: user1.id,
