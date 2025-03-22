@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import api from './routes/api.routes.js';
 import auth from './routes/auth.routes.js';
 import tasks from './routes/tasks.routes.js';
+import skills from './routes/skills.routes.js';
 const app = express();
 const port = process.env.PORT || 8080;
 
@@ -22,6 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api', api);
 app.use('/auth', auth);
 app.use('/tasks', tasks);
+app.use('/skills', skills);
 
 app.listen(port, () => {
   console.log('Server is running on port: ' + String(port));

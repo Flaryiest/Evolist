@@ -15,7 +15,7 @@ async function createTask(req: Request, res: Response) {
 
 async function changeTaskStatus(req: Request, res: Response) {
   const response = await db.changeTaskStatus(req.body.taskId, req.body.status);
-  console.log(response)
+  console.log(response);
   if (response) {
     res.status(200).send('Successfully changed status');
   } else {
